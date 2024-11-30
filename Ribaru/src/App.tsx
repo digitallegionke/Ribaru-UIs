@@ -1,4 +1,3 @@
-import React from 'react'
 import { typography } from '../theme/typography'
 
 function App() {
