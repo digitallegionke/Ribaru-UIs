@@ -1,113 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigate } from 'react-router-dom';
 
 export function StockScreen() {
-  const navigation = useNavigation();
+  const navigate = useNavigate();
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Stock</Text>
-      </View>
-
-      <View style={styles.statsContainer}>
-        <View style={styles.row}>
-          <View style={styles.statBox}>
-            <Text style={styles.statNumber}>150</Text>
-            <Text style={styles.statLabel}>TOTAL STOCK</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statNumber}>12</Text>
-            <Text style={styles.statLabel}>LOW STOCK</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.statBox}>
-            <Text style={styles.statNumber}>5</Text>
-            <Text style={styles.statLabel}>OUT STOCK</Text>
-          </View>
-        </View>
-      </View>
-
-      <TouchableOpacity style={styles.primaryButton}>
-        <Text style={styles.buttonText}>Search with QR Code</Text>
-      </TouchableOpacity>
-
-      <View style={styles.searchResults}>
-        <Text style={styles.searchTitle}>Recent Sales</Text>
-        {/* Add your list of recent sales here */}
-      </View>
-    </ScrollView>
+    <div className="container mx-auto px-4 py-8 max-w-lg">
+      <div className="space-y-4">
+        <button
+          onClick={() => navigate('/add-stock')}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add Stock
+        </button>
+        
+        <button
+          onClick={() => navigate('/search-barcode')}
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+        >
+          Search with Barcode
+        </button>
+      </div>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F3F4F6',
-  },
-  header: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#111827',
-  },
-  statsContainer: {
-    padding: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  statBox: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 12,
-    marginHorizontal: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#111827',
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#6B7280',
-    marginTop: 4,
-  },
-  primaryButton: {
-    backgroundColor: '#1D4ED8',
-    padding: 16,
-    borderRadius: 8,
-    margin: 20,
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  searchResults: {
-    padding: 20,
-  },
-  searchTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#111827',
-    marginBottom: 10,
-  },
-});
-

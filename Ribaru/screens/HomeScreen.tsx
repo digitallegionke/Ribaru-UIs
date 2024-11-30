@@ -1,126 +1,51 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigate } from 'react-router-dom';
 
 export function HomeScreen() {
-  const navigation = useNavigation();
+  const navigate = useNavigate();
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.welcomeText}>Hey Kevin</Text>
-          <Text style={styles.subText}>Welcome Back</Text>
-        </View>
-      </View>
+    <div className="container overflow-auto p-4">
+      <div className="header mb-6">
+        <div>
+          <h1 className="text-2xl font-bold">Hey Kevin</h1>
+          <p className="text-gray-600">Welcome Back</p>
+        </div>
+      </div>
 
-      <View style={styles.statsContainer}>
-        <View style={styles.statBox}>
-          <Text style={styles.statNumber}>150</Text>
-          <Text style={styles.statLabel}>TOTAL STOCK</Text>
-        </View>
-        <View style={styles.statBox}>
-          <Text style={styles.statNumber}>12</Text>
-          <Text style={styles.statLabel}>LOW STOCK</Text>
-        </View>
-        <View style={styles.statBox}>
-          <Text style={styles.statNumber}>5</Text>
-          <Text style={styles.statLabel}>OUT STOCK</Text>
-        </View>
-        <View style={styles.statBox}>
-          <Text style={styles.statNumber}>30</Text>
-          <Text style={styles.statLabel}>CUSTOMERS</Text>
-        </View>
-      </View>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white p-4 rounded-lg shadow">
+          <p className="text-2xl font-bold">150</p>
+          <p className="text-sm text-gray-600">TOTAL STOCK</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <p className="text-2xl font-bold">12</p>
+          <p className="text-sm text-gray-600">LOW STOCK</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <p className="text-2xl font-bold">5</p>
+          <p className="text-sm text-gray-600">OUT STOCK</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <p className="text-2xl font-bold">30</p>
+          <p className="text-sm text-gray-600">CUSTOMERS</p>
+        </div>
+      </div>
 
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('AddStock')}
-      >
-        <Text style={styles.buttonText}>Add Stock</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.secondaryButton}>
-        <Text style={styles.secondaryButtonText}>Add & Sell</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      <div className="grid grid-cols-1 gap-4">
+        <button
+          onClick={() => navigate('/add-sale')}
+          className="btn-primary"
+        >
+          Add Sale
+        </button>
+        <button
+          onClick={() => navigate('/add-stock')}
+          className="btn-secondary"
+        >
+          Add Stock
+        </button>
+      </div>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F3F4F6',
-  },
-  header: {
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#111827',
-  },
-  subText: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    padding: 10,
-    justifyContent: 'space-between',
-  },
-  statBox: {
-    width: '48%',
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#111827',
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#6B7280',
-    marginTop: 4,
-  },
-  primaryButton: {
-    backgroundColor: '#1D4ED8',
-    padding: 16,
-    borderRadius: 8,
-    margin: 20,
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  secondaryButton: {
-    backgroundColor: '#111827',
-    padding: 16,
-    borderRadius: 8,
-    marginHorizontal: 20,
-  },
-  secondaryButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-});
-

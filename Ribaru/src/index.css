@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-medium tracking-tight;
+  }
+
+  pre, code {
+    @apply font-mono;
+  }
+
+  /* Focus outline for keyboard navigation */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-500;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="time"],
+  input[type="week"],
+  textarea,
+  select {
+    @apply w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500;
+  }
+
+  /* Label styles */
+  label {
+    @apply text-ribaru-blue font-mono text-base mb-2 block;
+  }
+
+  /* Required field indicator */
+  label span {
+    @apply text-ribaru-blue;
+  }
+}
+
+@layer components {
+  /* Search input specific styles */
+  .search-input {
+    @apply w-full rounded-lg border-gray-300 pl-10 focus:border-primary-500 focus:ring-primary-500;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-100 text-secondary-700 hover:bg-secondary-200 dark:bg-secondary-700 dark:text-secondary-100 dark:hover:bg-secondary-600;
+  }
+
+  .btn-primary-sm {
+    @apply px-4 py-2 text-base font-medium text-white bg-[#0A1FDA] rounded-xl transition-colors duration-200 hover:bg-[#091BC4] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary-sm {
+    @apply px-4 py-2 text-base font-medium text-[#0A1FDA] bg-[#DDE0FB] rounded-xl transition-colors duration-200 hover:bg-[#C5C9F9] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input {
+    @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm;
+  }
+
+  .card {
+    @apply rounded-lg bg-white p-6 shadow-md dark:bg-gray-800;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gray-300 dark:bg-gray-600;
+  }
+}

@@ -1,4 +1,6 @@
 import { typography } from '../../../theme/typography'
+import { Bell } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const stats = [
   { label: 'Total Stock', value: '150' },
@@ -9,46 +11,67 @@ const stats = [
 
 export function Dashboard() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="bg-white overflow-hidden shadow rounded-lg"
-            style={{ fontFamily: typography.fontFamily.recursive }}
-          >
-            <div className="px-4 py-5 sm:p-6">
-              <dt className="text-sm font-medium text-gray-500">{stat.label}</dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">{stat.value}</dd>
-            </div>
-          </div>
-        ))}
+    <div className="p-6 max-w-xl mx-auto font-sans">
+      {/* Header */}
+      <div className="flex justify-between items-start mb-16">
+        <img src="/ribaru-logo.svg" alt="Ribaru Logo" className="h-8" />
+        <div className="bg-white p-2 rounded-full">
+          <Bell className="w-6 h-6 text-ribaru-blue" />
+        </div>
       </div>
 
-      <div className="mt-8">
-        <div className="bg-white shadow rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <h2 
-              className="text-lg font-medium text-gray-900 mb-4"
-              style={{ fontFamily: typography.fontFamily.recursive }}
-            >
-              Recent Activity
-            </h2>
-            <div className="space-y-4">
-              {[1, 2, 3].map((item) => (
-                <div 
-                  key={item} 
-                  className="border-l-4 border-blue-500 pl-4 py-2"
-                  style={{ fontFamily: typography.fontFamily.recursive }}
-                >
-                  <p className="text-sm text-gray-600">Stock updated for Item {item}</p>
-                  <p className="text-xs text-gray-400">2 hours ago</p>
-                </div>
-              ))}
-            </div>
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-4xl font-display font-bold tracking-tight mb-2">Hey Kevin</h1>
+          <p className="text-gray-500">Welcome Back</p>
+        </div>
+        <img 
+          src="/avatar.jpg" 
+          alt="Profile" 
+          className="w-16 h-16 rounded-full object-cover"
+        />
+      </div>
+
+      {/* Stats Card */}
+      <div className="bg-white rounded-2xl p-6 mb-6">
+        <div className="mb-6">
+          <p className="text-gray-500 text-sm font-medium mb-1">TODAY'S SALES</p>
+          <p className="text-4xl font-display font-bold tracking-tight text-blue-600">KES 16,788</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <p className="text-gray-500 text-sm font-medium mb-1">TOTAL STOCK VALUE</p>
+            <p className="text-xl font-display font-bold tracking-tight">KES 45,850</p>
+          </div>
+          <div>
+            <p className="text-gray-500 text-sm font-medium mb-1">TOTAL ITEMS IN STOCK</p>
+            <p className="text-xl font-display font-bold tracking-tight">150</p>
+          </div>
+          <div>
+            <p className="text-gray-500 text-sm font-medium mb-1">LOW STOCK ITEMS</p>
+            <p className="text-xl font-display font-bold tracking-tight text-red-500">5</p>
+          </div>
+          <div>
+            <p className="text-gray-500 text-sm font-medium mb-1">YOUR CUSTOMERS</p>
+            <p className="text-xl font-display font-bold tracking-tight">58</p>
           </div>
         </div>
       </div>
+
+      {/* Action Buttons */}
+      <Link 
+        to="/sales/add" 
+        className="block w-full bg-ribaru-blue text-white py-4 rounded-xl mb-4 text-center font-medium"
+      >
+        Add a Sale
+      </Link>
+      <Link 
+        to="/stocks/add" 
+        className="block w-full bg-gray-100 text-ribaru-blue py-4 rounded-xl text-center border-2 border-ribaru-blue font-medium"
+      >
+        Add Stock
+      </Link>
     </div>
   )
 }

@@ -1,38 +1,57 @@
-import { Home, ShoppingCart, Package, Settings } from 'lucide-react'
-import { typography } from '../../../theme/typography'
+import { Home, FileText, Package2, Settings } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import clsx from 'clsx'
 
 const navItems = [
-  { icon: Home, label: 'Home', href: '/' },
-  { icon: ShoppingCart, label: 'Sales', href: '/sales' },
-  { icon: Package, label: 'Stock', href: '/stock' },
-  { icon: Settings, label: 'Settings', href: '/settings' },
+  {
+    label: 'Home',
+    icon: Home,
+    path: '/'
+  },
+  {
+    label: 'Sales',
+    icon: FileText,
+    path: '/sales'
+  },
+  {
+    label: 'Stocks',
+    icon: Package2,
+    path: '/stocks'
+  },
+  {
+    label: 'Settings',
+    icon: Settings,
+    path: '/settings'
+  }
 ]
 
 export function Navbar() {
+  const location = useLocation()
+  const currentPath = location.pathname
+
   return (
-    <nav className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <h1 style={{ fontFamily: typography.fontFamily.recursive }} className="text-2xl font-bold text-gray-900">
-                Ribaru
-              </h1>
-            </div>
-          </div>
-          <div className="flex">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
-                style={{ fontFamily: typography.fontFamily.recursive }}
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100">
+      <div className="max-w-xl mx-auto px-6 py-2">
+        <div className="flex justify-between items-center">
+          {navItems.map((item) => {
+            const isActive = currentPath === item.path
+            const Icon = item.icon
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={clsx(
+                  'inline-flex flex-col items-center justify-center p-2',
+                  isActive
+                    ? 'text-ribaru-blue'
+                    : 'text-gray-500 hover:text-ribaru-blue'
+                )}
               >
-                <item.icon className="h-5 w-5 mr-2" />
-                {item.label}
-              </a>
-            ))}
-          </div>
+                <Icon className="w-6 h-6" />
+                <span className="text-xs">{item.label}</span>
+              </Link>
+            )
+          })}
         </div>
       </div>
     </nav>

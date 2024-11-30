@@ -1,59 +1,37 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { ChevronRight } from 'lucide-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function SettingsScreen() {
-  const navigation = useNavigation();
-
   const settingsOptions = [
-    { title: 'Profile Settings', screen: 'ProfileSettings' },
-    { title: 'Account Settings', screen: 'AccountSettings' },
-    { title: 'User Management', screen: 'UserManagement' },
-    { title: 'Business Profile', screen: 'BusinessProfile' },
-    { title: 'QR Code', screen: 'QRCode' },
+    { title: 'Profile Settings', path: '/settings/profile' },
+    { title: 'Account Settings', path: '/settings/account' },
+    { title: 'User Management', path: '/users' },
+    { title: 'Business Profile', path: '/settings/business' },
+    { title: 'POS Setup', path: '/settings/pos' },
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-      {settingsOptions.map((option, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.optionItem}
-          onPress={() => navigation.navigate(option.screen)}
-        >
-          <Text style={styles.optionText}>{option.title}</Text>
-          <ChevronRight size={24} color="#6B7280" />
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <div className="p-6 pb-32 max-w-xl mx-auto">
+      <h1 className="text-2xl font-bold mb-8">Settings</h1>
+      <div className="space-y-2">
+        {settingsOptions.map((option, index) => (
+          <Link
+            key={index}
+            to={option.path}
+            className="flex items-center justify-between p-4 bg-white rounded-xl hover:bg-gray-50"
+          >
+            <span className="font-medium">{option.title}</span>
+            <ChevronRight className="w-5 h-5 text-gray-400" />
+          </Link>
+        ))}
+      </div>
+      <button
+        type="submit"
+        className="btn-primary"
+      >
+        Save Changes
+      </button>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F3F4F6',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 20,
-  },
-  optionItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-  },
-  optionText: {
-    fontSize: 16,
-    color: '#111827',
-  },
-});
-

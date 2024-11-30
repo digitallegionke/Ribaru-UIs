@@ -1,6 +1,8 @@
 export const typography = {
   fontFamily: {
-    recursive: "'Recursive', sans-serif",
+    sans: 'Inter, system-ui, sans-serif',
+    display: 'Lexend, Georgia, serif',
+    mono: 'JetBrains Mono, monospace',
   },
   fontWeight: {
     light: 300,
@@ -20,9 +22,20 @@ export const typography = {
     '4xl': '2.25rem',  // 36px
   },
   lineHeight: {
+    none: 1,
     tight: 1.25,
+    snug: 1.375,
     normal: 1.5,
-    relaxed: 1.75,
+    relaxed: 1.625,
+    loose: 2,
+  },
+  letterSpacing: {
+    tighter: '-0.05em',
+    tight: '-0.025em',
+    normal: '0',
+    wide: '0.025em',
+    wider: '0.05em',
+    widest: '0.1em',
   },
 };
 
