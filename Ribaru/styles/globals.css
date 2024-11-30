@@ -1,41 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --font-recursive: 'Recursive', sans-serif;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: var(--font-recursive);
-  font-weight: 400;
-  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-recursive);
-  font-weight: 700;
-  line-height: 1.25;
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-recursive);
+  }
 }
 
-.font-recursive {
-  font-family: var(--font-recursive);
-}
-
-.font-light {
-  font-weight: 300;
-}
-
-.font-regular {
-  font-weight: 400;
-}
-
-.font-medium {
-  font-weight: 500;
-}
-
-.font-semibold {
-  font-weight: 600;
-}
-
-.font-bold {
-  font-weight: 700;
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-colors;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+  }
 }

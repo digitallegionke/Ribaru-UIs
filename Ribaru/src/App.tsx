@@ -1,10 +1,14 @@
 import { typography } from '../theme/typography'
+import { Navbar } from './components/layout/Navbar'
+import { Dashboard } from './components/ui/Dashboard'
 
 function App() {
   return (
-    <div style={{ fontFamily: typography.fontFamily.recursive }}>
-      <h1>Welcome to Ribaru</h1>
-      <p>Your application is now set up with the Recursive font!</p>
+    <div className="min-h-screen bg-gray-100">
+      <Navbar />
+      <main>
+        <Dashboard />
+      </main>
     </div>
   )
 }
