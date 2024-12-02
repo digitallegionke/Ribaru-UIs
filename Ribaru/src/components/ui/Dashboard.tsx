@@ -33,28 +33,20 @@ export function Dashboard() {
       </div>
 
       {/* Stats Card */}
-      <div className="bg-white rounded-2xl p-6 mb-6">
-        <div className="mb-6">
+      <div className="bg-white rounded-2xl p-6">
+        <div className="mb-8">
           <p className="text-gray-500 text-sm font-medium mb-1">TODAY'S SALES</p>
-          <p className="text-4xl font-display font-bold tracking-tight text-blue-600">KES 16,788</p>
+          <p className="text-4xl font-bold text-blue-600">KES 16,788</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-gray-500 text-sm font-medium mb-1">TOTAL STOCK VALUE</p>
-            <p className="text-xl font-display font-bold tracking-tight">KES 45,850</p>
+            <p className="text-gray-500 text-sm font-medium mb-1">TOTAL SALES</p>
+            <p className="text-2xl font-bold">KES 45,850</p>
           </div>
           <div>
-            <p className="text-gray-500 text-sm font-medium mb-1">TOTAL ITEMS IN STOCK</p>
-            <p className="text-xl font-display font-bold tracking-tight">150</p>
-          </div>
-          <div>
-            <p className="text-gray-500 text-sm font-medium mb-1">LOW STOCK ITEMS</p>
-            <p className="text-xl font-display font-bold tracking-tight text-red-500">5</p>
-          </div>
-          <div>
-            <p className="text-gray-500 text-sm font-medium mb-1">YOUR CUSTOMERS</p>
-            <p className="text-xl font-display font-bold tracking-tight">58</p>
+            <p className="text-gray-500 text-sm font-medium mb-1">TOTAL ITEMS SOLD</p>
+            <p className="text-2xl font-bold">150</p>
           </div>
         </div>
       </div>

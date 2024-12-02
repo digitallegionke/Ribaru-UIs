@@ -1,16 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Avatar } from '../src/components/Avatar';
+import { Link } from 'react-router-dom';
 
 export function HomeScreen() {
   const navigate = useNavigate();
 
   return (
     <div className="container overflow-auto p-4">
-      <div className="header mb-6">
+      <div className="header mb-6 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Hey Kevin</h1>
           <p className="text-gray-600">Welcome Back</p>
         </div>
+        <Link to="/profile" className="block">
+          <Avatar />
+        </Link>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">

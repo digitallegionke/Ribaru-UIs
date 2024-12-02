@@ -1,8 +1,8 @@
 export const typography = {
   fontFamily: {
-    sans: 'Inter, system-ui, sans-serif',
-    display: 'Lexend, Georgia, serif',
-    mono: 'JetBrains Mono, monospace',
+    sans: "'Recursive', system-ui, sans-serif",
+    display: "'Recursive', Georgia, serif",
+    mono: "'Recursive', monospace",
   },
   fontWeight: {
     light: 300,

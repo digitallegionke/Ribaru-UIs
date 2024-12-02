@@ -26,7 +26,7 @@ export function POSSetupPage() {
               </label>
               <textarea 
                 placeholder="Enter text to appear at the top of receipts"
-                className="w-full p-4 min-h-[100px]"
+                className="w-full p-4 min-h-[100px] bg-gray-50 rounded-xl border-0 placeholder-gray-400"
               />
             </div>
             <div>
@@ -35,7 +35,7 @@ export function POSSetupPage() {
               </label>
               <textarea 
                 placeholder="Enter text to appear at the bottom of receipts"
-                className="w-full p-4 min-h-[100px]"
+                className="w-full p-4 min-h-[100px] bg-gray-50 rounded-xl border-0 placeholder-gray-400"
               />
             </div>
             <label className="flex items-center justify-between">
@@ -62,7 +62,7 @@ export function POSSetupPage() {
               <input 
                 type="number" 
                 placeholder="16"
-                className="w-full p-4"
+                className="w-full p-4 bg-gray-50 rounded-xl border-0 placeholder-gray-400"
               />
             </div>
           </div>

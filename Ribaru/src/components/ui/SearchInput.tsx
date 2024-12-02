@@ -18,7 +18,7 @@ export function SearchInput({
   return (
     <div>
       {label && (
-        <label className="text-ribaru-blue font-mono text-base mb-2 block">
+        <label className="text-blue-600 text-sm mb-2 block">
           {label}
         </label>
       )}
@@ -31,7 +31,7 @@ export function SearchInput({
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`w-full bg-[#F1F2F6] rounded-[6px] border-0 pl-12 pr-4 py-4 text-[#1A1A1A] text-base font-mono focus:ring-1 focus:ring-ribaru-blue focus:outline-none ${className}`}
+          className={`w-full p-4 bg-gray-50 rounded-xl border-0 pl-12 placeholder-gray-400 text-base focus:ring-1 focus:ring-blue-600 focus:outline-none ${className}`}
         />
       </div>
     </div>

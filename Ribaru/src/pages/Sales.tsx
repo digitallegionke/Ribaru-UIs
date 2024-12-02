@@ -1,4 +1,4 @@
-import { ArrowLeft, Search, ChevronRight, Plus } from 'lucide-react'
+import { ArrowLeft, Search, Plus } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { SearchInput } from '../components/ui/SearchInput'
 
@@ -28,7 +28,7 @@ const recentSales = [
 
 export function SalesPage() {
   return (
-    <div className="p-6 pb-32">
+    <div className="relative min-h-screen p-6 pb-32">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-4">
@@ -37,17 +37,10 @@ export function SalesPage() {
           </Link>
           <h1 className="text-2xl font-bold">Sales</h1>
         </div>
-        <Link
-          to="/sales/add"
-          className="inline-flex items-center gap-2 bg-ribaru-blue text-white px-4 py-2 rounded-lg"
-        >
-          <Plus className="w-5 h-5" />
-          <span>Add Sale</span>
-        </Link>
       </div>
 
       {/* Stats Card */}
-      <div className="bg-white rounded-xl p-4 mb-6">
+      <div className="bg-white rounded-xl p-4 mb-6 shadow-sm">
         <div className="mb-6">
           <p className="text-gray-500 text-sm mb-1">TODAY'S SALES</p>
           <p className="text-4xl font-bold text-ribaru-blue">KES 16,788</p>
@@ -82,20 +75,26 @@ export function SalesPage() {
             <Link
               key={sale.id}
               to={`/sales/${sale.id}`}
-              className="block bg-white rounded-xl p-4 hover:bg-gray-50"
+              className="block bg-white rounded-xl p-4 shadow-sm"
             >
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-medium mb-1">{sale.product}</h3>
-                  <p className="text-gray-500 text-sm">{sale.quantity} Items • {sale.total}</p>
-                  <p className="text-gray-400 text-sm">{sale.date}</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-gray-400" />
+              <div>
+                <h3 className="font-medium mb-1">{sale.product}</h3>
+                <p className="text-gray-500 text-sm">{sale.quantity} Items • {sale.total}</p>
+                <p className="text-gray-400 text-sm">{sale.date}</p>
               </div>
             </Link>
           ))}
         </div>
       </div>
+
+      {/* Floating Add Button */}
+      <Link
+        to="/sales/add"
+        className="fixed bottom-6 right-6 inline-flex items-center gap-2 bg-ribaru-blue text-white px-4 py-2 rounded-lg shadow-lg"
+      >
+        <Plus className="w-5 h-5" />
+        <span>Add Sale</span>
+      </Link>
     </div>
   )
 }

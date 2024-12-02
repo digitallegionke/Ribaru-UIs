@@ -18,18 +18,18 @@ export function Select({
 }: SelectProps) {
   return (
     <div>
-      <label className="text-ribaru-blue font-mono text-base mb-2 block">
-        {label} {required && <span className="text-ribaru-blue">*</span>}
+      <label className="text-blue-600 text-sm mb-2 block">
+        {label} {required && <span className="text-blue-600">*</span>}
       </label>
       <select
         {...props}
         onChange={(e) => onChange(e.target.value)}
-        className={`w-full bg-[#F1F2F6] rounded-[6px] border-0 p-4 text-[#1A1A1A] text-base font-mono focus:ring-1 focus:ring-ribaru-blue focus:outline-none ${className}`}
+        className={`w-full p-4 bg-gray-50 rounded-xl border-0 placeholder-gray-400 text-base focus:ring-1 focus:ring-blue-600 focus:outline-none ${className}`}
       >
         {children}
       </select>
       {error && (
-        <p className="mt-1 text-red-500 text-sm font-mono">{error}</p>
+        <p className="mt-1 text-red-500 text-sm">{error}</p>
       )}
     </div>
   )

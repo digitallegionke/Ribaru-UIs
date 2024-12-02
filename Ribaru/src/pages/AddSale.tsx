@@ -128,7 +128,7 @@ export function AddSalePage() {
           </div>
           <button 
             type="submit"
-            className="btn-primary"
+            className="w-full bg-ribaru-blue text-white py-4 rounded-xl font-medium"
             disabled={selectedItems.length === 0}
           >
             Check Out

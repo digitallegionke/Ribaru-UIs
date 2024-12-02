@@ -1,5 +1,6 @@
 import { ArrowLeft, Camera, ChevronRight, LogOut } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { ProfileImage } from '../components/ProfileImage'
 
 export function ProfilePage() {
   return (
@@ -15,11 +16,7 @@ export function ProfilePage() {
       {/* Profile Photo */}
       <div className="flex flex-col items-center mb-8">
         <div className="relative mb-4">
-          <img 
-            src="/avatar.jpg" 
-            alt="Profile" 
-            className="w-24 h-24 rounded-full object-cover"
-          />
+          <ProfileImage />
           <button className="absolute bottom-0 right-0 bg-ribaru-blue p-2 rounded-full hover:bg-blue-700 transition-colors">
             <Camera className="w-4 h-4 text-white" />
           </button>

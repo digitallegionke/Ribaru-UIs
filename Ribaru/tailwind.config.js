@@ -39,9 +39,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Lexend', 'Georgia', 'serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Recursive', 'system-ui', 'sans-serif'],
+        display: ['Recursive', 'Georgia', 'serif'],
+        mono: ['Recursive', 'monospace'],
       },
       spacing: {
         '18': '4.5rem',
@@ -50,20 +50,6 @@ export default {
       },
       borderRadius: {
         '4xl': '2rem',
-      },
-      animation: {
-        'fade-in': 'fade-in 0.5s ease-out',
-        'slide-in': 'slide-in 0.5s ease-out',
-      },
-      keyframes: {
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        'slide-in': {
-          '0%': { transform: 'translateY(100%)' },
-          '100%': { transform: 'translateY(0)' },
-        },
       },
     },
   },
