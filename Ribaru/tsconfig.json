@@ -29,9 +29,10 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./components/*"]
     }
   },
-  "include": ["src", "theme", "screens"],
+  "include": ["src", "components"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

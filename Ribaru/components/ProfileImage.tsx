@@ -1,8 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 
-export const ProfileImage = () => {
+interface ProfileImageProps {
+  className?: string;
+}
+
+export const ProfileImage: React.FC<ProfileImageProps> = ({ className = '' }) => {
   return (
-    <div className="relative w-32 h-32 mx-auto">
+    <div className={`relative w-32 h-32 mx-auto ${className}`}>
       <svg
         width="100%"
         height="100%"
