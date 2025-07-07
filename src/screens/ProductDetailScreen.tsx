@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Image,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -90,6 +91,8 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
     }
   };
 
+  const mono = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' });
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -97,89 +100,57 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          Indian style curry...
+        <Text style={[styles.headerTitle, { fontFamily: mono }]} numberOfLines={1}>
+          {product.name}
         </Text>
         <TouchableOpacity>
-          <MaterialIcons name="menu" size={24} color="#000" />
+          <MaterialIcons name="menu" size={28} color="#0A1FDA" />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Product Name */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionLabel}>Product Name</Text>
+        <View style={styles.sectionBig}>
+          <View style={styles.sectionHeaderBig}>
+            <Text style={[styles.sectionLabelBig, { fontFamily: mono }]}>Product Name</Text>
             <TouchableOpacity>
-              <MaterialIcons name="edit" size={16} color="#0A1FDA" />
+              <MaterialIcons name="edit" size={18} color="#0A1FDA" />
+              <Text style={[styles.editText, { fontFamily: mono }]}>EDIT</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.productName}>Indian style curr...</Text>
+          <Text style={[styles.productNameBig, { fontFamily: mono }]}>{product.name}</Text>
         </View>
 
         {/* Inventory */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Inventory</Text>
-          
-          <View style={styles.inventoryItem}>
-            <Text style={styles.inventoryLabel}>On hand</Text>
-          </View>
-          
-          <View style={styles.inventoryItem}>
-            <View style={styles.inventoryRow}>
-              <Text style={styles.inventoryLabel}>Available</Text>
-              <View style={styles.inventoryRight}>
-                <Text style={styles.inventoryValue}>7</Text>
-                <TouchableOpacity>
-                  <MaterialIcons name="more-horiz" size={16} color="#9CA3AF" />
-                </TouchableOpacity>
-              </View>
+        <View style={styles.sectionBig}>
+          <Text style={[styles.sectionTitleBig, { fontFamily: mono }]}>Inventory</Text>
+          <View style={styles.inventoryRowBig}>
+            <View style={styles.inventoryCellBig}>
+              <Text style={[styles.inventoryLabelBig, { fontFamily: mono }]}>Available</Text>
+              <Text style={[styles.inventoryValueBig, { fontFamily: mono }]}>{product.quantity}</Text>
+            </View>
+            <View style={styles.inventoryCellBig}>
+              <Text style={[styles.inventoryLabelBig, { fontFamily: mono }]}>Committed</Text>
+              <Text style={[styles.inventoryValueBig, { fontFamily: mono }]}>0</Text>
             </View>
           </View>
-          
-          <View style={styles.inventoryItem}>
-            <View style={styles.inventoryRow}>
-              <Text style={styles.inventoryLabel}>Committed</Text>
-              <View style={styles.inventoryRight}>
-                <Text style={styles.inventoryValue}>0</Text>
-                <TouchableOpacity>
-                  <MaterialIcons name="more-horiz" size={16} color="#9CA3AF" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          
-          <Text style={styles.lastUpdated}>Last updated Today 1:05 PM</Text>
+          <Text style={[styles.lastUpdated, { fontFamily: mono }]}>Last updated Today 1:05 PM</Text>
         </View>
 
         {/* More Details */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>More details</Text>
-          
-          <View style={styles.detailItem}>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Price</Text>
-              <View style={styles.detailRight}>
-                <Text style={styles.priceValue}>KES 336.00</Text>
-                <TouchableOpacity>
-                  <MaterialIcons name="more-horiz" size={16} color="#9CA3AF" />
-                </TouchableOpacity>
-              </View>
-            </View>
+        <View style={styles.sectionBig}>
+          <Text style={[styles.sectionTitleBig, { fontFamily: mono }]}>More details</Text>
+          <View style={styles.detailRowBig}>
+            <Text style={[styles.detailLabelBig, { fontFamily: mono }]}>Price</Text>
+            <Text style={[styles.priceValueBig, { fontFamily: mono }]}>KES 336.00</Text>
           </View>
-          
-          <TouchableOpacity style={styles.detailItem}>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Description</Text>
-              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
+          <TouchableOpacity style={styles.detailRowBig}>
+            <Text style={[styles.detailLabelBig, { fontFamily: mono }]}>Description</Text>
+            <MaterialIcons name="chevron-right" size={18} color="#0A1FDA" />
           </TouchableOpacity>
-          
-          <TouchableOpacity style={styles.detailItem}>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Vendor, category, type, tag</Text>
-              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
+          <TouchableOpacity style={styles.detailRowBig}>
+            <Text style={[styles.detailLabelBig, { fontFamily: mono }]}>Vendor, category, type, tag</Text>
+            <MaterialIcons name="chevron-right" size={18} color="#0A1FDA" />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -205,93 +176,103 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E5E7EB',
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#0A1FDA',
     flex: 1,
     textAlign: 'center',
     marginHorizontal: 16,
+    letterSpacing: 1,
   },
   content: {
     flex: 1,
     paddingHorizontal: 24,
     paddingTop: 24,
   },
-  section: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+  sectionBig: {
+    backgroundColor: '#F6F7FF',
+    borderRadius: 16,
+    padding: 24,
+    marginBottom: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
   },
-  sectionHeader: {
+  sectionHeaderBig: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 8,
   },
-  sectionLabel: {
+  sectionLabelBig: {
+    fontSize: 14,
+    color: '#6B7280',
+    fontWeight: '700',
+    letterSpacing: 1,
+  },
+  editText: {
+    color: '#0A1FDA',
+    fontSize: 14,
+    fontWeight: '700',
+    marginLeft: 4,
+    letterSpacing: 1,
+  },
+  productNameBig: {
+    fontSize: 18,
+    color: '#0A1FDA',
+    fontWeight: '700',
+    marginTop: 8,
+    letterSpacing: 1,
+  },
+  sectionTitleBig: {
+    fontSize: 16,
+    color: '#0A1FDA',
+    fontWeight: '700',
+    marginBottom: 16,
+    letterSpacing: 1,
+  },
+  inventoryRowBig: {
+    flexDirection: 'row',
+    marginBottom: 12,
+  },
+  inventoryCellBig: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  inventoryLabelBig: {
     fontSize: 14,
     color: '#6B7280',
     fontWeight: '500',
+    marginBottom: 4,
   },
-  sectionTitle: {
-    fontSize: 16,
-    color: '#000',
-    fontWeight: '600',
-    marginBottom: 16,
-  },
-  productName: {
-    fontSize: 16,
+  inventoryValueBig: {
+    fontSize: 20,
     color: '#0A1FDA',
-    fontWeight: '500',
+    fontWeight: '700',
+    letterSpacing: 1,
   },
-  inventoryItem: {
-    marginBottom: 12,
-  },
-  inventoryRow: {
+  detailRowBig: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 12,
   },
-  inventoryLabel: {
+  detailLabelBig: {
     fontSize: 16,
-    color: '#000',
+    color: '#374151',
+    fontWeight: '500',
+    letterSpacing: 0.5,
   },
-  inventoryRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  inventoryValue: {
+  priceValueBig: {
     fontSize: 16,
     color: '#0A1FDA',
-    fontWeight: '600',
+    fontWeight: '700',
+    letterSpacing: 1
   },
   lastUpdated: {
     fontSize: 12,
     color: '#9CA3AF',
     marginTop: 8,
-  },
-  detailItem: {
-    marginBottom: 12,
-  },
-  detailRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  detailLabel: {
-    fontSize: 16,
-    color: '#000',
-  },
-  detailRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  priceValue: {
-    fontSize: 16,
-    color: '#0A1FDA',
-    fontWeight: '600',
-  },
+  }
 });
