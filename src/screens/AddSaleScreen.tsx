@@ -16,15 +16,21 @@ import type { RootStackParamList } from '../navigation/AppNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
+const mockItems = [
+  { name: 'Granola', price: 1500 },
+  { name: 'Trail Mix', price: 1200 },
+  { name: 'Curry Paste', price: 800 },
+];
+
 export function AddSaleScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState(mockItems[0]);
   const [quantity, setQuantity] = useState('1');
-  const [pricePerItem] = useState('1,500');
+  const [showItemList, setShowItemList] = useState(false);
 
   const handleAddToCart = () => {
     if (selectedItem && quantity) {
-      const amount = parseInt(quantity) * 1500;
+      const amount = parseInt(quantity) * selectedItem.price;
       navigation.navigate('Checkout', { amount });
     }
   };
@@ -38,25 +44,26 @@ export function AddSaleScreen() {
             <MaterialIcons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Add Sale</Text>
-          <TouchableOpacity>
-            <MaterialIcons name="menu" size={24} color="#000" />
-          </TouchableOpacity>
+          <View style={{ width: 24 }} />
         </View>
 
         {/* Form */}
         <View style={styles.form}>
           <View style={styles.formGroup}>
             <Text style={styles.label}>Select Item</Text>
-            <TouchableOpacity
-              style={styles.selectButton}
-              onPress={() => navigation.navigate('SelectItem', {
-                onSelect: (item: string) => setSelectedItem(item),
-              })}
-            >
-              <Text style={styles.selectButtonText}>
-                {selectedItem || 'Choose an item'}
-              </Text>
+            <TouchableOpacity style={styles.selectButton} onPress={() => setShowItemList(!showItemList)}>
+              <Text style={styles.selectButtonText}>{selectedItem.name}</Text>
+              <MaterialIcons name="expand-more" size={20} color="#0A1FDA" />
             </TouchableOpacity>
+            {showItemList && (
+              <View style={styles.dropdownList}>
+                {mockItems.map(item => (
+                  <TouchableOpacity key={item.name} style={styles.dropdownItem} onPress={() => { setSelectedItem(item); setShowItemList(false); }}>
+                    <Text style={styles.dropdownItemText}>{item.name}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </View>
 
           <View style={styles.formGroup}>
@@ -73,7 +80,7 @@ export function AddSaleScreen() {
           <View style={styles.formGroup}>
             <Text style={styles.label}>Price per Item</Text>
             <View style={styles.priceDisplay}>
-              <Text style={styles.priceText}>KES {pricePerItem}</Text>
+              <Text style={styles.priceText}>KES {selectedItem.price.toLocaleString()}</Text>
             </View>
           </View>
         </View>
@@ -176,5 +183,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+  },
+  dropdownList: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 16,
+    maxHeight: 200,
+  },
+  dropdownItem: {
+    padding: 8,
+  },
+  dropdownItemText: {
+    fontSize: 16,
+    color: '#000',
   },
 });

@@ -27,7 +27,7 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
   const mockProducts = {
     '1': {
       name: 'Granola',
-      image: require('../assets/icon.png'),
+      image: require('../../assets/icon.png'),
       price: 7.99,
       quantity: 2,
       status: 'LOW STOCK',
@@ -35,7 +35,7 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
     },
     '2': {
       name: 'Trail Mix',
-      image: require('../assets/icon.png'),
+      image: require('../../assets/icon.png'),
       price: 5.49,
       quantity: 0,
       status: 'OUT OF STOCK',
@@ -43,7 +43,7 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
     },
     '3': {
       name: 'Curry Paste',
-      image: require('../assets/icon.png'),
+      image: require('../../assets/icon.png'),
       price: 3.99,
       quantity: 7,
       status: 'IN STOCK',
@@ -51,7 +51,7 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
     },
     '4': {
       name: 'Oats',
-      image: require('../assets/icon.png'),
+      image: require('../../assets/icon.png'),
       price: 2.99,
       quantity: 15,
       status: 'IN STOCK',
@@ -59,7 +59,7 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
     },
     '5': {
       name: 'Honey',
-      image: require('../assets/icon.png'),
+      image: require('../../assets/icon.png'),
       price: 6.25,
       quantity: 1,
       status: 'LOW STOCK',
@@ -67,7 +67,7 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
     },
     '6': {
       name: 'Almonds',
-      image: require('../assets/icon.png'),
+      image: require('../../assets/icon.png'),
       price: 8.99,
       quantity: 0,
       status: 'OUT OF STOCK',
