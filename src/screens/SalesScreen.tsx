@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  TextInput,
+  ScrollView,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Text, Card, Button } from '../components';
+import { COLORS, SPACING, SHADOWS, BORDER_RADIUS } from '../utils/constants';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -18,39 +21,16 @@ interface Sale {
   id: string;
   product: string;
   quantity: number;
-  total: string;
+  total: number;
   date: string;
 }
 
-const recentSales: Sale[] = [
-  {
-    id: '1',
-    product: 'Trail Mix',
-    quantity: 3,
-    total: 'KES 4,500',
-    date: '2024-01-20',
-  },
-  {
-    id: '2',
-    product: 'Indian style curry paste',
-    quantity: 2,
-    total: 'KES 3,000',
-    date: '2024-01-19',
-  },
-  {
-    id: '3',
-    product: 'Granola',
-    quantity: 4,
-    total: 'KES 6,000',
-    date: '2024-01-18',
-  },
-];
-
 export function SalesScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Mock sales data
-  const sales = [
+  const sales: Sale[] = [
     { id: '1', product: 'Granola', quantity: 3, total: 3600, date: '2024-07-08 10:30' },
     { id: '2', product: 'Trail Mix', quantity: 2, total: 1600, date: '2024-07-08 09:15' },
     { id: '3', product: 'Curry Paste', quantity: 5, total: 12000, date: '2024-07-07 16:20' },
@@ -58,66 +38,118 @@ export function SalesScreen() {
     { id: '5', product: 'Honey', quantity: 4, total: 3200, date: '2024-07-06 11:00' },
   ];
 
+  const filteredSales = sales.filter(sale =>
+    sale.product.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const totalSales = sales.reduce((sum, sale) => sum + sale.total, 0);
+  const totalItems = sales.reduce((sum, sale) => sum + sale.quantity, 0);
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#0A1FDA" />
-        </TouchableOpacity>
-        <Text variant="h1" weight="bold" color="primary" style={styles.headerTitle}>Sales</Text>
-        <View style={{ width: 24 }} />
-      </View>
-
-      {/* Stats Card */}
-      <View style={styles.statsCard}>
-        <View style={styles.todaysSales}>
-          <Text variant="label" color="gray.500" style={styles.statsLabel}>TODAY'S SALES</Text>
-          <Text variant="h1" weight="bold" color="primary" style={styles.todaysSalesAmount}>16,788</Text>
-        </View>
-
-        <View style={styles.statsGrid}>
-          <View style={styles.statsItem}>
-            <Text variant="label" color="gray.500" style={styles.statsLabel}>TOTAL SALES</Text>
-            <Text variant="h3" weight="semiBold" color="primary" style={styles.statsValue}>45,850</Text>
-          </View>
-          <View style={styles.statsItem}>
-            <Text variant="label" color="gray.500" style={styles.statsLabel}>TOTAL ITEMS SOLD</Text>
-            <Text variant="h3" weight="semiBold" color="primary" style={styles.statsValue}>150</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Search */}
-      <View style={styles.searchContainer}>
-        <View style={styles.searchInputContainer}>
-          <MaterialIcons name="search" size={20} color="#0A1FDA" />
-          <Text variant="body2" color="gray.400" style={styles.searchPlaceholder}>Search sales...</Text>
-        </View>
-      </View>
-
-      {/* Recent Sales */}
-      <View style={styles.salesSection}>
-        <Text variant="h3" weight="semiBold" color="primary" style={styles.sectionTitle}>RECENT SALES</Text>
-        {sales.map(sale => (
-          <View key={sale.id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', borderRadius: 12, padding: 16, marginBottom: 8 }}>
-            <View>
-              <Text variant="body1" weight="medium">{sale.product}</Text>
-              <Text variant="caption" color="gray.500">{sale.date}</Text>
-              <Text variant="caption" color="gray.500">Qty: {sale.quantity}</Text>
-            </View>
-            <Text variant="h3" weight="bold" color="primary">KES {sale.total.toLocaleString()}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Floating Add Button */}
-      <TouchableOpacity
-        style={styles.floatingButton}
-        onPress={() => navigation.navigate('AddSale')}
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: SPACING['4xl'] }}
+        showsVerticalScrollIndicator={false}
       >
-        <MaterialIcons name="add" size={24} color="#fff" />
-      </TouchableOpacity>
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIcons name="arrow-back" size={24} color={COLORS.gray[700]} />
+          </TouchableOpacity>
+          <Text variant="h2" weight="bold" color="primary" style={styles.headerTitle}>Sales</Text>
+          <View style={{ width: 24 }} />
+        </View>
+
+        {/* Stats Card */}
+        <View style={styles.statsContainer}>
+          <Card elevation="md" padding="lg" style={styles.statsCard}>
+            <Text variant="label" color="gray.500">TODAY'S SALES</Text>
+            <Text variant="h1" color="primary" weight="bold" style={styles.todaysSalesAmount}>
+              KES {totalSales.toLocaleString()}
+            </Text>
+            
+            <View style={styles.statsGrid}>
+              <View style={styles.statsItem}>
+                <Text variant="label" color="gray.500">TOTAL SALES</Text>
+                <Text variant="h3" weight="semiBold" color="primary" style={styles.statsValue}>
+                  KES {totalSales.toLocaleString()}
+                </Text>
+              </View>
+              <View style={styles.statsItem}>
+                <Text variant="label" color="gray.500">TOTAL ITEMS SOLD</Text>
+                <Text variant="h3" weight="semiBold" color="primary" style={styles.statsValue}>
+                  {totalItems}
+                </Text>
+              </View>
+            </View>
+          </Card>
+        </View>
+
+        {/* Search */}
+        <View style={styles.searchContainer}>
+          <View style={styles.searchInputContainer}>
+            <MaterialIcons name="search" size={20} color={COLORS.gray[400]} style={{ marginLeft: SPACING.sm }} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search sales..."
+              placeholderTextColor={COLORS.gray[400]}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
+        </View>
+
+        {/* Recent Sales */}
+        <View style={styles.salesSection}>
+          <Text variant="h3" weight="semiBold" color="primary" style={styles.sectionTitle}>
+            Recent Sales
+          </Text>
+          
+          <View style={styles.salesList}>
+            {filteredSales.length > 0 ? (
+              filteredSales.map(sale => (
+                <Card key={sale.id} elevation="sm" padding="lg" style={styles.saleItem}>
+                  <View style={styles.saleInfo}>
+                    <Text variant="body1" weight="medium" color="primary" style={styles.productName}>
+                      {sale.product}
+                    </Text>
+                    <Text variant="body2" color="gray.500">
+                      Qty: <Text variant="body2" weight="semiBold" color="primary">{sale.quantity}</Text> • {formatDate(sale.date)}
+                    </Text>
+                  </View>
+                  <Text variant="h3" weight="bold" color="primary">
+                    KES {sale.total.toLocaleString()}
+                  </Text>
+                </Card>
+              ))
+            ) : (
+              <Text variant="body1" color="gray.500" style={styles.emptyText}>
+                No sales found.
+              </Text>
+            )}
+          </View>
+        </View>
+
+        {/* Action Button */}
+        <View style={styles.actionContainer}>
+          <Button
+            title="Add New Sale"
+            onPress={() => navigation.navigate('AddSale')}
+            variant="primary"
+            size="lg"
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -125,103 +157,95 @@ export function SalesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: COLORS.background.primary,
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    justifyContent: 'space-between',
+    paddingHorizontal: SPACING.xl,
+    paddingTop: SPACING.sm,
+    paddingBottom: SPACING.xl,
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
+    flex: 1,
+    textAlign: 'center',
+  },
+  statsContainer: {
+    paddingHorizontal: SPACING.xl,
+    marginBottom: SPACING['3xl'],
   },
   statsCard: {
-    backgroundColor: 'white',
-    margin: 24,
-    borderRadius: 16,
-    padding: 20,
-  },
-  todaysSales: {
-    marginBottom: 20,
-  },
-  statsLabel: {
-    fontSize: 12,
-    color: '#6B7280',
-    fontWeight: '500',
-    marginBottom: 8,
+    backgroundColor: COLORS.background.card,
   },
   todaysSalesAmount: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#0A1FDA',
-  },
-  currency: {
-    fontSize: 16,
-    color: '#6B7280',
+    marginTop: SPACING.sm,
+    marginBottom: SPACING.xl,
   },
   statsGrid: {
     flexDirection: 'row',
-    gap: 16,
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: COLORS.gray[200],
   },
   statsItem: {
     flex: 1,
+    padding: SPACING.lg,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: COLORS.gray[200],
   },
   statsValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000',
+    marginTop: SPACING.xs,
   },
   searchContainer: {
-    paddingHorizontal: 24,
-    marginBottom: 24,
+    paddingHorizontal: SPACING.xl,
+    marginBottom: SPACING['3xl'],
   },
   searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    backgroundColor: COLORS.background.card,
+    borderRadius: BORDER_RADIUS.lg,
+    borderWidth: 1,
+    borderColor: COLORS.gray[200],
+    height: 48,
+    ...SHADOWS.sm,
   },
-  searchPlaceholder: {
-    marginLeft: 12,
+  searchInput: {
+    flex: 1,
     fontSize: 16,
-    color: '#9CA3AF',
+    color: COLORS.gray[700],
+    marginLeft: SPACING.sm,
+    paddingRight: SPACING.lg,
   },
   salesSection: {
-    flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: SPACING.xl,
+    marginBottom: SPACING['3xl'],
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#000',
-    marginBottom: 16,
+    marginBottom: SPACING.lg,
   },
-  floatingButton: {
-    position: 'absolute',
-    bottom: 100,
-    right: 24,
-    backgroundColor: '#0A1FDA',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+  salesList: {
+    gap: SPACING.md,
+  },
+  saleItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    justifyContent: 'space-between',
+  },
+  saleInfo: {
+    flex: 1,
+    marginRight: SPACING.lg,
+  },
+  productName: {
+    marginBottom: SPACING.xs,
+  },
+  emptyText: {
+    textAlign: 'center',
+    marginTop: SPACING.xl,
+  },
+  actionContainer: {
+    paddingHorizontal: SPACING.xl,
   },
 });
