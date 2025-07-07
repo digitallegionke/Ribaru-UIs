@@ -13,6 +13,10 @@ import { AccountSettingsScreen } from '../screens/AccountSettingsScreen';
 import { UserManagementScreen } from '../screens/UserManagementScreen';
 import { BusinessProfileScreen } from '../screens/BusinessProfileScreen';
 import { POSSetupScreen } from '../screens/POSSetupScreen';
+import { OnboardingWelcomeScreen } from '../screens/OnboardingWelcomeScreen';
+import { OnboardingFeaturesScreen } from '../screens/OnboardingFeaturesScreen';
+import { OnboardingGetStartedScreen } from '../screens/OnboardingGetStartedScreen';
+import { MockLoginScreen } from '../screens/MockLoginScreen';
 
 export type RootStackParamList = {
   MainTabs: undefined;
@@ -28,6 +32,10 @@ export type RootStackParamList = {
   UserManagement: undefined;
   BusinessProfile: undefined;
   POSSetup: undefined;
+  OnboardingWelcome: undefined;
+  OnboardingFeatures: undefined;
+  OnboardingGetStarted: undefined;
+  MockLogin: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,6 +60,10 @@ export function AppNavigator() {
       <Stack.Screen name="UserManagement" component={UserManagementScreen} />
       <Stack.Screen name="BusinessProfile" component={BusinessProfileScreen} />
       <Stack.Screen name="POSSetup" component={POSSetupScreen} />
+      <Stack.Screen name="OnboardingWelcome" component={OnboardingWelcomeScreen} />
+      <Stack.Screen name="OnboardingFeatures" component={OnboardingFeaturesScreen} />
+      <Stack.Screen name="OnboardingGetStarted" component={OnboardingGetStartedScreen} />
+      <Stack.Screen name="MockLogin" component={MockLoginScreen} />
     </Stack.Navigator>
   );
 }
