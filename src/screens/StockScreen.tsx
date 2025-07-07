@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   FlatList,
   TextInput,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -74,6 +75,8 @@ export function StockScreen() {
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const mono = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' });
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -81,34 +84,28 @@ export function StockScreen() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Stock</Text>
-        <View style={{ width: 24 }} />
+        <Text style={[styles.headerTitle, { fontFamily: mono }]}>Stock</Text>
+        <TouchableOpacity>
+          <MaterialIcons name="menu" size={28} color="#0A1FDA" />
+        </TouchableOpacity>
       </View>
 
       {/* Stats Cards */}
-      <View style={styles.statsContainer}>
-        <View style={styles.totalItemsCard}>
-          <View style={styles.statsCardHeader}>
-            <Text style={styles.statsLabel}>TOTAL ITEMS</Text>
-            <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
+      <View style={styles.statsCardBig}>
+        <View style={styles.statsRowBig}>
+          <View style={styles.statsCellBig}>
+            <Text style={[styles.statsLabel, { fontFamily: mono }]}>TOTAL ITEMS</Text>
+            <Text style={[styles.statsValueBig, { fontFamily: mono }]}>150</Text>
           </View>
-          <Text style={styles.totalItemsValue}>150</Text>
+          <View style={styles.statsCellBig}>
+            <Text style={[styles.statsLabel, { fontFamily: mono }]}>LOW STOCK ITEMS</Text>
+            <Text style={[styles.statsValueBig, { color: '#DC2626', fontFamily: mono }]}>12</Text>
+          </View>
         </View>
-
-        <View style={styles.statsGrid}>
-          <View style={styles.statsCard}>
-            <View style={styles.statsCardHeader}>
-              <Text style={styles.statsLabel}>LOW STOCK ITEMS</Text>
-              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
-            <Text style={styles.statsValue}>12</Text>
-          </View>
-          <View style={styles.statsCard}>
-            <View style={styles.statsCardHeader}>
-              <Text style={styles.statsLabel}>OUT OF STOCK</Text>
-              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
-            <Text style={styles.statsValue}>5</Text>
+        <View style={styles.statsRowBig}>
+          <View style={styles.statsCellBig}>
+            <Text style={[styles.statsLabel, { fontFamily: mono }]}>OUT OF STOCK</Text>
+            <Text style={[styles.statsValueBig, { color: '#DC2626', fontFamily: mono }]}>5</Text>
           </View>
         </View>
       </View>
@@ -119,7 +116,7 @@ export function StockScreen() {
         <View style={styles.searchInputContainer}>
           <MaterialIcons name="search" size={20} color="#0A1FDA" />
           <TextInput
-            style={styles.searchInput}
+            style={[styles.searchInput, { fontFamily: mono }]}
             placeholder="Search by name..."
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -138,18 +135,28 @@ export function StockScreen() {
           >
             <View style={styles.stockItemContent}>
               <View style={styles.stockItemHeader}>
-                <Text style={styles.stockItemName}>{product.name}</Text>
+                <Text style={[styles.stockItemName, { fontFamily: mono }]}>{product.name}</Text>
                 <MaterialIcons name="chevron-right" size={24} color="#9CA3AF" />
               </View>
               <View style={styles.stockItemFooter}>
-                <Text style={styles.stockItemQuantity}>Quantity: {product.quantity}</Text>
-                <Text style={[styles.stockItemStatus, { color: getStatusColor(product.status) }]}> 
+                <Text style={[styles.stockItemQuantity, { fontFamily: mono }]}>Quantity: {product.quantity}</Text>
+                <Text style={[styles.stockItemStatus, { color: getStatusColor(product.status), fontFamily: mono }]}> 
                   {product.status}
                 </Text>
               </View>
             </View>
           </TouchableOpacity>
         ))}
+      </View>
+
+      {/* Action Buttons */}
+      <View style={styles.actionButtons}>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate('AddStock')}>
+          <Text style={[styles.primaryButtonText, { fontFamily: mono }]}>Add Stock</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.secondaryButton} onPress={() => {/* Search with Barcode */}}>
+          <Text style={[styles.secondaryButtonText, { fontFamily: mono }]}>Search with Barcode</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -175,42 +182,36 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#000',
   },
-  statsContainer: {
-    paddingHorizontal: 24,
-    paddingTop: 24,
+  statsCardBig: {
+    backgroundColor: '#F6F7FF',
+    borderRadius: 16,
+    padding: 24,
     marginBottom: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
   },
-  totalItemsCard: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-  },
-  statsCardHeader: {
+  statsRowBig: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
+  },
+  statsCellBig: {
+    flex: 1,
+    padding: 16,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  statsValueBig: {
+    fontSize: 24,
+    fontWeight: '500',
+    color: '#000',
+    marginTop: 4,
   },
   statsLabel: {
     fontSize: 12,
     color: '#6B7280',
     fontWeight: '500',
-  },
-  totalItemsValue: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  statsGrid: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-  statsCard: {
-    flex: 1,
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
   },
   statsValue: {
     fontSize: 32,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
   searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#F6F7FF',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   stockItem: {
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -278,5 +279,35 @@ const styles = StyleSheet.create({
   stockItemStatus: {
     fontSize: 12,
     fontWeight: '500',
+  },
+  actionButtons: {
+    paddingHorizontal: 24,
+    gap: 16,
+    marginBottom: 16,
+  },
+  primaryButton: {
+    backgroundColor: '#0A1FDA',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  primaryButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  secondaryButton: {
+    backgroundColor: '#F6F7FF',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#0A1FDA',
+    marginTop: 8,
+  },
+  secondaryButtonText: {
+    color: '#0A1FDA',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
