@@ -7,6 +7,8 @@ import {
   TextInput,
   FlatList,
   Image,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -15,32 +17,39 @@ import type { RootStackParamList } from '../navigation/AppNavigator';
 import { Text } from '../components';
 import { COLORS } from '../utils/constants';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-
 export function StockScreen() {
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [searchQuery, setSearchQuery] = useState('');
 
   // Mock product data
   const products = [
-    { id: '1', name: 'Granola', quantity: 2, status: 'LOW STOCK', image: require('../../assets/icon.png') },
-    { id: '2', name: 'Trail Mix', quantity: 0, status: 'OUT OF STOCK', image: require('../../assets/icon.png') },
-    { id: '3', name: 'Curry Paste', quantity: 7, status: 'IN STOCK', image: require('../../assets/icon.png') },
-    { id: '4', name: 'Oats', quantity: 15, status: 'IN STOCK', image: require('../../assets/icon.png') },
-    { id: '5', name: 'Honey', quantity: 1, status: 'LOW STOCK', image: require('../../assets/icon.png') },
-    { id: '6', name: 'Almonds', quantity: 0, status: 'OUT OF STOCK', image: require('../../assets/icon.png') },
+    { id: '1', name: 'Indian style curry paste', quantity: 45, status: 'IN STOCK' },
+    { id: '2', name: 'Granola', quantity: 0, status: 'OUT OF STOCK' },
+    { id: '3', name: 'Trail Mix', quantity: 23, status: 'LOW STOCK' },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'IN STOCK':
-        return COLORS.success;
+        return '#D1FADF'; // green bg
       case 'LOW STOCK':
-        return COLORS.warning;
+        return '#FEF3C7'; // yellow bg
       case 'OUT OF STOCK':
-        return COLORS.error;
+        return '#FEE2E2'; // red bg
       default:
-        return COLORS.gray[500];
+        return '#E5E7EB';
+    }
+  };
+  const getStatusTextColor = (status: string) => {
+    switch (status) {
+      case 'IN STOCK':
+        return '#039855'; // green text
+      case 'LOW STOCK':
+        return '#B54708'; // yellow text
+      case 'OUT OF STOCK':
+        return '#D92D20'; // red text
+      default:
+        return '#6B7280';
     }
   };
 
@@ -53,82 +62,80 @@ export function StockScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
+          <MaterialIcons name="arrow-back" size={26} color="#000" />
         </TouchableOpacity>
-        <Text variant="h2" weight="bold" color="primary" style={styles.headerTitle}>Stock</Text>
+        <Text style={styles.headerTitle}>Stock</Text>
         <TouchableOpacity>
-          <MaterialIcons name="menu" size={28} color={COLORS.primary} />
+          <MaterialIcons name="menu" size={28} color="#3B5BFE" />
         </TouchableOpacity>
       </View>
 
       {/* Stats Cards */}
-      <View style={styles.statsRowBig}>
-        <View style={styles.statsCardBig}>
-          <Text variant="label" color="gray.500">TOTAL ITEMS</Text>
-          <Text variant="h3" weight="bold" color="primary" style={styles.statsValueBig}>150</Text>
+      <View style={styles.statsSection}>
+        <View style={styles.statsCardLarge}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <Text style={styles.statsLabel}>TOTAL ITEMS</Text>
+            <MaterialIcons name="north-east" size={15} color="#C7C9DF" />
+          </View>
+          <Text style={styles.statsValueLarge}>150</Text>
         </View>
-        <View style={styles.statsCardBig}>
-          <Text variant="label" color="gray.500">LOW STOCK ITEMS</Text>
-          <Text variant="h3" weight="bold" color="warning" style={styles.statsValueBig}>12</Text>
-        </View>
-        <View style={styles.statsCardBig}>
-          <Text variant="label" color="gray.500">OUT OF STOCK</Text>
-          <Text variant="h3" weight="bold" color="error" style={styles.statsValueBig}>5</Text>
-        </View>
-      </View>
-
-      {/* Search */}
-      <View style={styles.searchSection}>
-        <Text variant="label" color="primary" style={styles.searchLabel}>Search Items</Text>
-        <View style={styles.searchInputContainer}>
-          <MaterialIcons name="search" size={20} color={COLORS.primary} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search by name..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholderTextColor={COLORS.gray[400]}
-          />
+        <View style={styles.statsRowSmall}>
+          <View style={styles.statsCardSmall}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Text style={styles.statsLabel}>LOW STOCK ITEMS</Text>
+              <MaterialIcons name="north-east" size={18} color="#B0B3C7" />
+            </View>
+            <Text style={styles.statsValueSmall}>12</Text>
+          </View>
+          <View style={styles.statsCardSmall}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Text style={styles.statsLabel}>LOW STOCK ITEMS</Text>
+              <MaterialIcons name="north-east" size={18} color="#B0B3C7" />
+            </View>
+            <Text style={{...styles.statsValueSmall, color: '#D92D20'}}>5</Text>
+          </View>
         </View>
       </View>
 
-      {/* Stock List */}
+      {/* Add Stock Button */}
+      <TouchableOpacity style={styles.addStockButton} onPress={() => navigation.navigate('AddStock')}>
+        <Text style={styles.addStockButtonText}>Add Stock</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.searchBarcodeButton}>
+        <Text style={styles.searchBarcodeButtonText}>Search with Barcode</Text>
+      </TouchableOpacity>
+
+      {/* Recent Sales */}
+      <Text style={styles.recentSalesLabel}>RECENT SALES</Text>
+      <View style={styles.searchBarContainer}>
+        <MaterialIcons name="search" size={22} color="#B0B3C7" style={{ marginLeft: 8 }} />
+        <TextInput
+          style={styles.searchBarInput}
+          placeholder="Search stock"
+          placeholderTextColor="#B0B3C7"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+      </View>
       <FlatList
         data={filteredProducts}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.stockCard}
-            onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
-            activeOpacity={0.85}
-          >
-            <View style={styles.stockItemRow}>
-              <Image source={item.image} style={styles.productImage} />
-              <View style={styles.stockItemInfo}>
-                <Text variant="body1" weight="semiBold" style={styles.stockItemName}>{item.name}</Text>
-                <View style={styles.stockItemMeta}>
-                  <Text variant="caption" style={styles.stockItemQuantity}>Qty: {item.quantity}</Text>
-                  <Text variant="caption" color={getStatusColor(item.status)} style={styles.stockItemStatus}>{item.status}</Text>
-                </View>
-              </View>
-              <MaterialIcons name="chevron-right" size={24} color={COLORS.gray[400]} />
+          <View style={styles.productRow}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.productName}>{item.name}</Text>
+              <Text style={styles.productQuantity}><Text style={styles.productQuantityNumber}>{item.quantity}</Text> Items</Text>
             </View>
-          </TouchableOpacity>
+            <View style={[styles.statusPill, { backgroundColor: getStatusColor(item.status) }]}> 
+              <Text style={{...styles.statusPillText, color: getStatusTextColor(item.status)}}>{item.status}</Text>
+            </View>
+            <MaterialIcons name="chevron-right" size={22} color="#B0B3C7" />
+          </View>
         )}
         keyExtractor={item => item.id}
-        contentContainerStyle={styles.stockList}
-        ListEmptyComponent={<Text variant="body1" color="gray.500" style={{ textAlign: 'center', marginTop: 32 }}>No items found.</Text>}
+        contentContainerStyle={styles.productList}
+        ListEmptyComponent={<Text style={styles.emptyText}>No items found.</Text>}
         showsVerticalScrollIndicator={false}
       />
-
-      {/* Action Buttons */}
-      <View style={styles.actionButtons}>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate('AddStock')}>
-          <Text variant="button" weight="semiBold" style={styles.primaryButtonText}>Add Stock</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.secondaryButton} onPress={() => {}}>
-          <Text variant="button" weight="semiBold" style={styles.secondaryButtonText}>Search with Barcode</Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }
@@ -136,147 +143,205 @@ export function StockScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background.primary,
+    backgroundColor: '#F5F6FF',
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.gray[200],
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 18,
+    backgroundColor: 'transparent',
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: COLORS.primary,
-  },
-  statsRowBig: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  statsCardBig: {
-    backgroundColor: COLORS.primaryLight,
-    borderRadius: 16,
-    padding: 24,
-    marginBottom: 24,
-    marginHorizontal: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  statsValueBig: {
+    fontFamily: 'GeistMono',
     fontSize: 22,
     fontWeight: '700',
-    color: COLORS.primary,
-    marginTop: 4,
-  },
-  searchSection: {
-    paddingHorizontal: 24,
-    marginBottom: 16,
-  },
-  searchLabel: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-  searchInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.background.secondary,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  searchInput: {
+    color: '#000',
     flex: 1,
-    marginLeft: 12,
-    fontSize: 16,
-    color: COLORS.gray[900],
+    textAlign: 'left',
+    marginLeft: 8,
   },
-  stockList: {
+  statsSection: {
     paddingHorizontal: 16,
-    paddingBottom: 16,
+    marginBottom: 12,
   },
-  stockCard: {
-    backgroundColor: 'white',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 14,
+  statsCardLarge: {
+    backgroundColor: '#E9EAFB',
+    borderRadius: 22,
+    paddingVertical: 38,
+    paddingHorizontal: 28,
+    marginBottom: 20,
+    borderWidth: 1.5,
+    borderColor: '#E0E2F1',
+    shadowColor: '#000',
+    shadowOpacity: 0.07,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    minWidth: 0,
+  },
+  statsCardSmall: {
+    backgroundColor: '#E9EAFB',
+    borderRadius: 14,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    flex: 1,
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: '#E0E2F1',
+  },
+  statsRowSmall: {
+    flexDirection: 'row',
+    gap: 0,
+  },
+  statsLabel: {
+    fontFamily: 'GeistMono',
+    fontSize: 11,
+    color: '#7C7F99',
+    fontWeight: '400',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+    marginBottom: 10,
+  },
+  statsValueLarge: {
+    fontFamily: 'GeistMono',
+    fontSize: 38,
+    color: '#000',
+    fontWeight: '700',
+    marginTop: 10,
+    textShadowColor: 'rgba(0,0,0,0.04)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 2,
+    textAlign: 'left',
+  },
+  statsValueSmall: {
+    fontFamily: 'GeistMono',
+    fontSize: 22,
+    color: '#000',
+    fontWeight: '700',
+    marginTop: 8,
+    textAlign: 'left',
+  },
+  addStockButton: {
+    backgroundColor: '#3B5BFE',
+    borderRadius: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginBottom: 10,
+  },
+  addStockButtonText: {
+    fontFamily: 'GeistMono',
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 1,
+  },
+  searchBarcodeButton: {
+    backgroundColor: '#E9EAFB',
+    borderRadius: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginBottom: 18,
+    borderWidth: 1,
+    borderColor: '#3B5BFE',
+  },
+  searchBarcodeButtonText: {
+    fontFamily: 'GeistMono',
+    color: '#3B5BFE',
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 1,
+  },
+  recentSalesLabel: {
+    fontFamily: 'GeistMono',
+    fontSize: 12,
+    color: '#000',
+    fontWeight: '700',
+    marginLeft: 18,
+    marginBottom: 8,
+    marginTop: 8,
+    letterSpacing: 1,
+  },
+  searchBarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginHorizontal: 12,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#E0E2F1',
+    height: 48,
+  },
+  searchBarInput: {
+    flex: 1,
+    fontFamily: 'GeistMono',
+    fontSize: 14,
+    color: '#000',
+    marginLeft: 8,
+  },
+  productList: {
+    paddingHorizontal: 8,
+    paddingBottom: 24,
+  },
+  productRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#E0E2F1',
     shadowColor: '#000',
     shadowOpacity: 0.03,
-    shadowRadius: 4,
+    shadowRadius: 2,
     shadowOffset: { width: 0, height: 1 },
   },
-  stockItemRow: {
-    flexDirection: 'row',
+  productName: {
+    fontFamily: 'GeistMono',
+    fontSize: 14,
+    color: '#000',
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  productQuantity: {
+    fontFamily: 'GeistMono',
+    fontSize: 11,
+    color: '#7C7F99',
+    fontWeight: '500',
+  },
+  productQuantityNumber: {
+    fontFamily: 'GeistMono',
+    fontSize: 11,
+    color: '#7C7F99',
+    fontWeight: '700',
+  },
+  statusPill: {
+    borderRadius: 8,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
     alignItems: 'center',
-    flex: 1,
-  },
-  productImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    marginRight: 16,
-    backgroundColor: COLORS.background.secondary,
-  },
-  stockItemInfo: {
-    flex: 1,
     justifyContent: 'center',
+    marginRight: 8,
+    minWidth: 80,
   },
-  stockItemName: {
-    fontSize: 16,
-    color: COLORS.gray[900],
-    marginBottom: 4,
+  statusPillText: {
+    fontFamily: 'GeistMono',
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
-  stockItemMeta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  stockItemQuantity: {
+  emptyText: {
+    fontFamily: 'GeistMono',
+    color: '#7C7F99',
     fontSize: 13,
-    color: COLORS.gray[600],
-    marginRight: 12,
-  },
-  stockItemStatus: {
-    fontSize: 13,
-    fontWeight: '600',
-  },
-  actionButtons: {
-    paddingHorizontal: 24,
-    gap: 16,
-    marginBottom: 16,
-    marginTop: 8,
-  },
-  primaryButton: {
-    backgroundColor: COLORS.primary,
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-  },
-  primaryButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  secondaryButton: {
-    backgroundColor: COLORS.background.secondary,
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: COLORS.primary,
-    marginTop: 8,
-  },
-  secondaryButtonText: {
-    color: COLORS.primary,
-    fontSize: 16,
-    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 32,
   },
 });
