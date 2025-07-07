@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,38 +17,40 @@ export function AddPaymentOptionScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Add Payment Option</Text>
-        <View style={{ width: 24 }} />
-      </View>
-      <View style={styles.form}>
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Payment Method</Text>
-          {paymentMethods.map((pm) => (
-            <TouchableOpacity
-              key={pm}
-              style={[styles.methodButton, method === pm && styles.selectedMethod]}
-              onPress={() => setMethod(pm)}
-            >
-              <Text style={[styles.methodText, method === pm && styles.selectedMethodText]}>{pm}</Text>
-            </TouchableOpacity>
-          ))}
-          <TextInput
-            style={styles.input}
-            value={method}
-            onChangeText={setMethod}
-            placeholder="Other (type here)"
-          />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIcons name="arrow-back" size={24} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Add Payment Option</Text>
+          <View style={{ width: 24 }} />
         </View>
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave} disabled={!method}>
-          <Text style={styles.saveButtonText}>Save</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+        <View style={styles.form}>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Payment Method</Text>
+            {paymentMethods.map((pm) => (
+              <TouchableOpacity
+                key={pm}
+                style={[styles.methodButton, method === pm && styles.selectedMethod]}
+                onPress={() => setMethod(pm)}
+              >
+                <Text style={[styles.methodText, method === pm && styles.selectedMethodText]}>{pm}</Text>
+              </TouchableOpacity>
+            ))}
+            <TextInput
+              style={styles.input}
+              value={method}
+              onChangeText={setMethod}
+              placeholder="Other (type here)"
+            />
+          </View>
+          <TouchableOpacity style={styles.saveButton} onPress={handleSave} disabled={!method}>
+            <Text style={styles.saveButtonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

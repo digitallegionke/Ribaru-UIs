@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -28,64 +30,66 @@ export function AddSaleScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Add Sale</Text>
-        <TouchableOpacity>
-          <MaterialIcons name="menu" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
-
-      {/* Form */}
-      <View style={styles.form}>
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Select Item</Text>
-          <TouchableOpacity
-            style={styles.selectButton}
-            onPress={() => navigation.navigate('SelectItem', {
-              onSelect: (item: string) => setSelectedItem(item),
-            })}
-          >
-            <Text style={styles.selectButtonText}>
-              {selectedItem || 'Choose an item'}
-            </Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIcons name="arrow-back" size={24} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Add Sale</Text>
+          <TouchableOpacity>
+            <MaterialIcons name="menu" size={24} color="#000" />
           </TouchableOpacity>
         </View>
 
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Quantity</Text>
-          <TextInput
-            style={styles.input}
-            value={quantity}
-            onChangeText={setQuantity}
-            keyboardType="numeric"
-            placeholder="1"
-          />
-        </View>
+        {/* Form */}
+        <View style={styles.form}>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Select Item</Text>
+            <TouchableOpacity
+              style={styles.selectButton}
+              onPress={() => navigation.navigate('SelectItem', {
+                onSelect: (item: string) => setSelectedItem(item),
+              })}
+            >
+              <Text style={styles.selectButtonText}>
+                {selectedItem || 'Choose an item'}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Price per Item</Text>
-          <View style={styles.priceDisplay}>
-            <Text style={styles.priceText}>KES {pricePerItem}</Text>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Quantity</Text>
+            <TextInput
+              style={styles.input}
+              value={quantity}
+              onChangeText={setQuantity}
+              keyboardType="numeric"
+              placeholder="1"
+            />
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Price per Item</Text>
+            <View style={styles.priceDisplay}>
+              <Text style={styles.priceText}>KES {pricePerItem}</Text>
+            </View>
           </View>
         </View>
-      </View>
 
-      {/* Add to Cart Button */}
-      <View style={styles.bottomSection}>
-        <TouchableOpacity
-          style={[styles.addToCartButton, !selectedItem && styles.disabledButton]}
-          onPress={handleAddToCart}
-          disabled={!selectedItem}
-        >
-          <Text style={styles.addToCartButtonText}>Add to Cart</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+        {/* Add to Cart Button */}
+        <View style={styles.bottomSection}>
+          <TouchableOpacity
+            style={[styles.addToCartButton, !selectedItem && styles.disabledButton]}
+            onPress={handleAddToCart}
+            disabled={!selectedItem}
+          >
+            <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

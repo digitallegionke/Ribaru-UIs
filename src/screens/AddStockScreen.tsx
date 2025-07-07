@@ -7,6 +7,8 @@ import {
   SafeAreaView,
   TextInput,
   ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -29,94 +31,96 @@ export function AddStockScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Add Stock</Text>
-        <TouchableOpacity>
-          <MaterialIcons name="menu" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Product Name */}
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Product Name*</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Granola"
-            value={productName}
-            onChangeText={setProductName}
-          />
-        </View>
-
-        {/* SKU */}
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>SKU*</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="32"
-            value={sku}
-            onChangeText={setSku}
-            keyboardType="numeric"
-          />
-        </View>
-
-        {/* Description */}
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Description (Optional)</Text>
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            placeholder="Enter Stock Description"
-            value={description}
-            onChangeText={setDescription}
-            multiline
-            numberOfLines={4}
-            textAlignVertical="top"
-          />
-        </View>
-
-        {/* Add Variants */}
-        <TouchableOpacity style={styles.addVariantsButton}>
-          <MaterialIcons name="add" size={20} color="#0A1FDA" />
-          <Text style={styles.addVariantsText}>Add Variants(color, size, weight)</Text>
-        </TouchableOpacity>
-
-        {/* Initial Quantity */}
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Initial Quantity</Text>
-          <TouchableOpacity style={styles.selectInput}>
-            <Text style={styles.selectText}>{quantity}</Text>
-            <MaterialIcons name="keyboard-arrow-down" size={20} color="#9CA3AF" />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIcons name="arrow-back" size={24} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Add Stock</Text>
+          <TouchableOpacity>
+            <MaterialIcons name="menu" size={24} color="#000" />
           </TouchableOpacity>
         </View>
 
-        {/* Price per Item */}
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Price per Item</Text>
-          <View style={styles.priceInputContainer}>
-            <Text style={styles.currencyPrefix}>KES</Text>
+        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          {/* Product Name */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Product Name*</Text>
             <TextInput
-              style={styles.priceInput}
-              placeholder="1,500"
-              value={price}
-              onChangeText={setPrice}
+              style={styles.input}
+              placeholder="Granola"
+              value={productName}
+              onChangeText={setProductName}
+            />
+          </View>
+
+          {/* SKU */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>SKU*</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="32"
+              value={sku}
+              onChangeText={setSku}
               keyboardType="numeric"
             />
           </View>
-        </View>
-      </ScrollView>
 
-      {/* Add Stock Button */}
-      <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.addStockButton} onPress={handleAddStock}>
-          <Text style={styles.addStockButtonText}>Add Stock</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+          {/* Description */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Description (Optional)</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              placeholder="Enter Stock Description"
+              value={description}
+              onChangeText={setDescription}
+              multiline
+              numberOfLines={4}
+              textAlignVertical="top"
+            />
+          </View>
+
+          {/* Add Variants */}
+          <TouchableOpacity style={styles.addVariantsButton}>
+            <MaterialIcons name="add" size={20} color="#0A1FDA" />
+            <Text style={styles.addVariantsText}>Add Variants(color, size, weight)</Text>
+          </TouchableOpacity>
+
+          {/* Initial Quantity */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Initial Quantity</Text>
+            <TouchableOpacity style={styles.selectInput}>
+              <Text style={styles.selectText}>{quantity}</Text>
+              <MaterialIcons name="keyboard-arrow-down" size={20} color="#9CA3AF" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Price per Item */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Price per Item</Text>
+            <View style={styles.priceInputContainer}>
+              <Text style={styles.currencyPrefix}>KES</Text>
+              <TextInput
+                style={styles.priceInput}
+                placeholder="1,500"
+                value={price}
+                onChangeText={setPrice}
+                keyboardType="numeric"
+              />
+            </View>
+          </View>
+        </ScrollView>
+
+        {/* Add Stock Button */}
+        <View style={styles.bottomSection}>
+          <TouchableOpacity style={styles.addStockButton} onPress={handleAddStock}>
+            <Text style={styles.addStockButtonText}>Add Stock</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
