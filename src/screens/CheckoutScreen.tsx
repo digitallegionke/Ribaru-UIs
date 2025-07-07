@@ -51,7 +51,7 @@ export function CheckoutScreen() {
 
         {/* Options */}
         <View style={styles.optionsSection}>
-          <TouchableOpacity style={styles.optionItem}>
+          <TouchableOpacity style={styles.optionItem} onPress={() => navigation.navigate('AddCustomer')}>
             <View style={styles.optionLeft}>
               <MaterialIcons name="person-add" size={20} color="#0A1FDA" />
               <Text style={styles.optionText}>Add Customer</Text>
@@ -59,7 +59,7 @@ export function CheckoutScreen() {
             <MaterialIcons name="chevron-right" size={20} color="#9CA3AF" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.optionItem}>
+          <TouchableOpacity style={styles.optionItem} onPress={() => navigation.navigate('AddPaymentOption')}>
             <View style={styles.optionLeft}>
               <MaterialIcons name="credit-card" size={20} color="#0A1FDA" />
               <Text style={styles.optionText}>Add Payment Option</Text>

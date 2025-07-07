@@ -6,6 +6,8 @@ import { SelectItemScreen } from '../screens/SelectItemScreen';
 import { CheckoutScreen } from '../screens/CheckoutScreen';
 import { AddStockScreen } from '../screens/AddStockScreen';
 import { ProductDetailScreen } from '../screens/ProductDetailScreen';
+import { AddCustomerScreen } from '../screens/AddCustomerScreen';
+import { AddPaymentOptionScreen } from '../screens/AddPaymentOptionScreen';
 
 export type RootStackParamList = {
   MainTabs: undefined;
@@ -14,6 +16,8 @@ export type RootStackParamList = {
   Checkout: { amount: number };
   AddStock: undefined;
   ProductDetail: { productId: string };
+  AddCustomer: undefined;
+  AddPaymentOption: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -31,6 +35,8 @@ export function AppNavigator() {
       <Stack.Screen name="Checkout" component={CheckoutScreen} />
       <Stack.Screen name="AddStock" component={AddStockScreen} />
       <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+      <Stack.Screen name="AddCustomer" component={AddCustomerScreen} />
+      <Stack.Screen name="AddPaymentOption" component={AddPaymentOptionScreen} />
     </Stack.Navigator>
   );
 }
