@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   TextInput,
 } from 'react-native';
-import { ArrowLeft, Menu } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
@@ -32,11 +32,11 @@ export function AddSaleScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Add Sale</Text>
         <TouchableOpacity>
-          <Menu size={24} color="#000" />
+          <MaterialIcons name="menu" size={24} color="#000" />
         </TouchableOpacity>
       </View>
 
@@ -46,7 +46,9 @@ export function AddSaleScreen() {
           <Text style={styles.label}>Select Item</Text>
           <TouchableOpacity
             style={styles.selectButton}
-            onPress={() => navigation.navigate('SelectItem')}
+            onPress={() => navigation.navigate('SelectItem', {
+              onSelect: (item: string) => setSelectedItem(item),
+            })}
           >
             <Text style={styles.selectButtonText}>
               {selectedItem || 'Choose an item'}

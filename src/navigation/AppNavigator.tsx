@@ -10,7 +10,7 @@ import { ProductDetailScreen } from '../screens/ProductDetailScreen';
 export type RootStackParamList = {
   MainTabs: undefined;
   AddSale: undefined;
-  SelectItem: undefined;
+  SelectItem: Partial<{ onSelect: (item: string) => void }>;
   Checkout: { amount: number };
   AddStock: undefined;
   ProductDetail: { productId: string };

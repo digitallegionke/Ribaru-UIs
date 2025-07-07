@@ -8,10 +8,11 @@ import {
   TextInput,
   FlatList,
 } from 'react-native';
-import { ArrowLeft, Search } from 'lucide-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import type { RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -49,41 +50,57 @@ const products: Product[] = [
 
 export function SelectItemScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'SelectItem'>>();
+  const onSelect = route.params?.onSelect;
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const renderProduct = ({ item }: { item: Product }) => (
-    <TouchableOpacity
-      style={[styles.productItem, item.soldOut && styles.soldOutItem]}
-      onPress={() => !item.soldOut && navigation.goBack()}
-      disabled={item.soldOut}
-    >
-      <View style={styles.productInfo}>
-        <Text style={[styles.productName, item.soldOut && styles.soldOutText]}>
-          {item.name}
-        </Text>
-        <Text style={[styles.productPrice, item.soldOut && styles.soldOutText]}>
-          {item.priceRange}
-        </Text>
-        <View style={styles.productMeta}>
-          <Text style={[styles.variantsText, item.soldOut && styles.soldOutText]}>
-            {item.variants} variants
+  const renderProduct = ({ item }: { item: Product }) => {
+    const isSelected = selectedProductId === item.id;
+    return (
+      <TouchableOpacity
+        style={[
+          styles.productItem,
+          item.soldOut && styles.soldOutItem,
+          isSelected && !item.soldOut && styles.selectedItem,
+        ]}
+        onPress={() => {
+          if (!item.soldOut) {
+            setSelectedProductId(item.id);
+            if (onSelect) onSelect(item.name);
+            navigation.goBack();
+          }
+        }}
+        disabled={item.soldOut}
+      >
+        <View style={styles.productInfo}>
+          <Text style={[styles.productName, item.soldOut && styles.soldOutText]}>
+            {item.name}
           </Text>
-          {item.soldOut && <Text style={styles.soldOutLabel}>Sold out</Text>}
+          <Text style={[styles.productPrice, item.soldOut && styles.soldOutText]}>
+            {item.priceRange}
+          </Text>
+          <View style={styles.productMeta}>
+            <Text style={[styles.variantsText, item.soldOut && styles.soldOutText]}>
+              {item.variants} variants
+            </Text>
+            {item.soldOut && <Text style={styles.soldOutLabel}>Sold out</Text>}
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Select Item</Text>
         <View style={{ width: 24 }} />
@@ -92,7 +109,7 @@ export function SelectItemScreen() {
       {/* Search */}
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
-          <Search size={20} color="#0A1FDA" />
+          <MaterialIcons name="search" size={20} color="#0A1FDA" />
           <TextInput
             style={styles.searchInput}
             placeholder="Search stock"
@@ -201,5 +218,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#DC2626',
     fontWeight: '500',
+  },
+  selectedItem: {
+    borderColor: '#1D4ED8',
+    borderWidth: 2,
+    backgroundColor: '#EEF2FF',
   },
 });

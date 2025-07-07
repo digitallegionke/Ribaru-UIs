@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, ShoppingCart, Package, Settings } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/HomeScreen';
 import { SalesScreen } from '../screens/SalesScreen';
 import { StockScreen } from '../screens/StockScreen';
@@ -40,28 +40,28 @@ export function TabNavigator() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="home" size={24} color={color} />,
         }}
       />
       <Tab.Screen
         name="Sales"
         component={SalesScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <ShoppingCart size={size} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="shopping-cart" size={24} color={color} />,
         }}
       />
       <Tab.Screen
         name="Stocks"
         component={StockScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Package size={size} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="inventory" size={24} color={color} />,
         }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Settings size={size} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="settings" size={24} color={color} />,
         }}
       />
     </Tab.Navigator>

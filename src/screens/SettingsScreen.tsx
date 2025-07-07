@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { ChevronRight } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface SettingsGroup {
   title: string;
@@ -75,7 +75,7 @@ export function SettingsScreen() {
                     onPress={item.onPress}
                   >
                     <Text style={styles.settingsItemText}>{item.label}</Text>
-                    <ChevronRight size={16} color="#9CA3AF" />
+                    <MaterialIcons name="chevron-right" size={20} color="#000" />
                   </TouchableOpacity>
                 ))}
               </View>

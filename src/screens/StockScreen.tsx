@@ -8,7 +8,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import { ArrowLeft, Search, ChevronRight } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
@@ -68,7 +68,7 @@ export function StockScreen() {
       <View style={styles.stockItemContent}>
         <View style={styles.stockItemHeader}>
           <Text style={styles.stockItemName}>{item.name}</Text>
-          <ChevronRight size={16} color="#9CA3AF" />
+          <MaterialIcons name="chevron-right" size={24} color="#9CA3AF" />
         </View>
         <View style={styles.stockItemFooter}>
           <Text style={styles.stockItemQuantity}>Quantity: {item.quantity}</Text>
@@ -85,7 +85,7 @@ export function StockScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Stock</Text>
         <View style={{ width: 24 }} />
@@ -96,7 +96,7 @@ export function StockScreen() {
         <View style={styles.totalItemsCard}>
           <View style={styles.statsCardHeader}>
             <Text style={styles.statsLabel}>TOTAL ITEMS</Text>
-            <ChevronRight size={16} color="#9CA3AF" />
+            <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
           </View>
           <Text style={styles.totalItemsValue}>150</Text>
         </View>
@@ -105,14 +105,14 @@ export function StockScreen() {
           <View style={styles.statsCard}>
             <View style={styles.statsCardHeader}>
               <Text style={styles.statsLabel}>LOW STOCK ITEMS</Text>
-              <ChevronRight size={16} color="#9CA3AF" />
+              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
             </View>
             <Text style={styles.statsValue}>12</Text>
           </View>
           <View style={styles.statsCard}>
             <View style={styles.statsCardHeader}>
               <Text style={styles.statsLabel}>OUT OF STOCK</Text>
-              <ChevronRight size={16} color="#9CA3AF" />
+              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
             </View>
             <Text style={styles.statsValue}>5</Text>
           </View>
@@ -123,7 +123,7 @@ export function StockScreen() {
       <View style={styles.searchSection}>
         <Text style={styles.searchLabel}>Search Items</Text>
         <View style={styles.searchInputContainer}>
-          <Search size={20} color="#0A1FDA" />
+          <MaterialIcons name="search" size={20} color="#0A1FDA" />
           <TextInput
             style={styles.searchInput}
             placeholder="Search by name..."

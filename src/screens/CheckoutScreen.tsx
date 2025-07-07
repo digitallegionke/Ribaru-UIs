@@ -7,18 +7,18 @@ import {
   SafeAreaView,
   TextInput,
 } from 'react-native';
-import { ArrowLeft, UserPlus, CreditCard, ChevronRight } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp as RNRouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../navigation/AppNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type RouteProp = RouteProp<RootStackParamList, 'Checkout'>;
+type CheckoutRouteProp = RNRouteProp<RootStackParamList, 'Checkout'>;
 
 export function CheckoutScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp>();
+  const route = useRoute<CheckoutRouteProp>();
   const { amount } = route.params;
   const [note, setNote] = useState('');
 
@@ -32,7 +32,7 @@ export function CheckoutScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Checkout</Text>
         <View style={{ width: 24 }} />
@@ -53,18 +53,18 @@ export function CheckoutScreen() {
         <View style={styles.optionsSection}>
           <TouchableOpacity style={styles.optionItem}>
             <View style={styles.optionLeft}>
-              <UserPlus size={20} color="#0A1FDA" />
+              <MaterialIcons name="person-add" size={20} color="#0A1FDA" />
               <Text style={styles.optionText}>Add Customer</Text>
             </View>
-            <ChevronRight size={20} color="#9CA3AF" />
+            <MaterialIcons name="chevron-right" size={20} color="#9CA3AF" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.optionItem}>
             <View style={styles.optionLeft}>
-              <CreditCard size={20} color="#0A1FDA" />
+              <MaterialIcons name="credit-card" size={20} color="#0A1FDA" />
               <Text style={styles.optionText}>Add Payment Option</Text>
             </View>
-            <ChevronRight size={20} color="#9CA3AF" />
+            <MaterialIcons name="chevron-right" size={20} color="#9CA3AF" />
           </TouchableOpacity>
         </View>
 

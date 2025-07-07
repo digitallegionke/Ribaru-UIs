@@ -8,7 +8,7 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import { ArrowLeft, Menu, Plus, ChevronDown } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
@@ -33,11 +33,11 @@ export function AddStockScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Add Stock</Text>
         <TouchableOpacity>
-          <Menu size={24} color="#000" />
+          <MaterialIcons name="menu" size={24} color="#000" />
         </TouchableOpacity>
       </View>
 
@@ -81,7 +81,7 @@ export function AddStockScreen() {
 
         {/* Add Variants */}
         <TouchableOpacity style={styles.addVariantsButton}>
-          <Plus size={20} color="#0A1FDA" />
+          <MaterialIcons name="add" size={20} color="#0A1FDA" />
           <Text style={styles.addVariantsText}>Add Variants(color, size, weight)</Text>
         </TouchableOpacity>
 
@@ -90,7 +90,7 @@ export function AddStockScreen() {
           <Text style={styles.label}>Initial Quantity</Text>
           <TouchableOpacity style={styles.selectInput}>
             <Text style={styles.selectText}>{quantity}</Text>
-            <ChevronDown size={20} color="#9CA3AF" />
+            <MaterialIcons name="keyboard-arrow-down" size={20} color="#9CA3AF" />
           </TouchableOpacity>
         </View>
 

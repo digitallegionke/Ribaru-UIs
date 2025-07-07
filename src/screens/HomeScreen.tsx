@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import { Bell } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
@@ -23,7 +23,7 @@ export function HomeScreen() {
       <View style={styles.header}>
         <Text style={styles.logo}>ribaru</Text>
         <TouchableOpacity style={styles.notificationButton}>
-          <Bell size={20} color="#000" />
+          <MaterialIcons name="notifications" size={20} color="#000" />
           <View style={styles.notificationBadge} />
         </TouchableOpacity>
       </View>

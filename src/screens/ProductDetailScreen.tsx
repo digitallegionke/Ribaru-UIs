@@ -7,18 +7,18 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { ArrowLeft, Menu, Edit, MoreHorizontal, ChevronRight } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp as RNRouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../navigation/AppNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type RouteProp = RouteProp<RootStackParamList, 'ProductDetail'>;
+type ProductDetailRouteProp = RNRouteProp<RootStackParamList, 'ProductDetail'>;
 
 export function ProductDetailScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp>();
+  const route = useRoute<ProductDetailRouteProp>();
   const [hasChanges, setHasChanges] = useState(false);
 
   return (
@@ -26,13 +26,13 @@ export function ProductDetailScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle} numberOfLines={1}>
           Indian style curry...
         </Text>
         <TouchableOpacity>
-          <Menu size={24} color="#000" />
+          <MaterialIcons name="menu" size={24} color="#000" />
         </TouchableOpacity>
       </View>
 
@@ -42,7 +42,7 @@ export function ProductDetailScreen() {
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionLabel}>Product Name</Text>
             <TouchableOpacity>
-              <Edit size={16} color="#0A1FDA" />
+              <MaterialIcons name="edit" size={16} color="#0A1FDA" />
             </TouchableOpacity>
           </View>
           <Text style={styles.productName}>Indian style curr...</Text>
@@ -62,7 +62,7 @@ export function ProductDetailScreen() {
               <View style={styles.inventoryRight}>
                 <Text style={styles.inventoryValue}>7</Text>
                 <TouchableOpacity>
-                  <MoreHorizontal size={16} color="#9CA3AF" />
+                  <MaterialIcons name="more-horiz" size={16} color="#9CA3AF" />
                 </TouchableOpacity>
               </View>
             </View>
@@ -74,7 +74,7 @@ export function ProductDetailScreen() {
               <View style={styles.inventoryRight}>
                 <Text style={styles.inventoryValue}>0</Text>
                 <TouchableOpacity>
-                  <MoreHorizontal size={16} color="#9CA3AF" />
+                  <MaterialIcons name="more-horiz" size={16} color="#9CA3AF" />
                 </TouchableOpacity>
               </View>
             </View>
@@ -93,7 +93,7 @@ export function ProductDetailScreen() {
               <View style={styles.detailRight}>
                 <Text style={styles.priceValue}>KES 336.00</Text>
                 <TouchableOpacity>
-                  <MoreHorizontal size={16} color="#9CA3AF" />
+                  <MaterialIcons name="more-horiz" size={16} color="#9CA3AF" />
                 </TouchableOpacity>
               </View>
             </View>
@@ -102,14 +102,14 @@ export function ProductDetailScreen() {
           <TouchableOpacity style={styles.detailItem}>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Description</Text>
-              <ChevronRight size={16} color="#9CA3AF" />
+              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
             </View>
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.detailItem}>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Vendor, category, type, tag</Text>
-              <ChevronRight size={16} color="#9CA3AF" />
+              <MaterialIcons name="chevron-right" size={16} color="#9CA3AF" />
             </View>
           </TouchableOpacity>
         </View>

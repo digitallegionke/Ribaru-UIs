@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import { ArrowLeft, Search, Plus } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
@@ -66,7 +66,7 @@ export function SalesScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Sales</Text>
         <View style={{ width: 24 }} />
@@ -98,7 +98,7 @@ export function SalesScreen() {
       {/* Search */}
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
-          <Search size={20} color="#0A1FDA" />
+          <MaterialIcons name="search" size={20} color="#0A1FDA" />
           <Text style={styles.searchPlaceholder}>Search sales...</Text>
         </View>
       </View>
@@ -119,7 +119,7 @@ export function SalesScreen() {
         style={styles.floatingButton}
         onPress={() => navigation.navigate('AddSale')}
       >
-        <Plus size={20} color="white" />
+        <MaterialIcons name="add" size={20} color="white" />
         <Text style={styles.floatingButtonText}>Add Sale</Text>
       </TouchableOpacity>
     </SafeAreaView>
