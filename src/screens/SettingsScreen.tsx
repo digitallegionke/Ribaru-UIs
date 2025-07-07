@@ -8,6 +8,9 @@ import {
   ScrollView,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/AppNavigator';
 
 interface SettingsGroup {
   title: string;
@@ -18,17 +21,18 @@ interface SettingsGroup {
 }
 
 export function SettingsScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const settingsGroups: SettingsGroup[] = [
     {
       title: 'Account Setting',
       items: [
         {
           label: 'Profile Settings',
-          onPress: () => console.log('Profile Settings'),
+          onPress: () => navigation.navigate('ProfileSettings'),
         },
         {
           label: 'Account Settings',
-          onPress: () => console.log('Account Settings'),
+          onPress: () => navigation.navigate('AccountSettings'),
         },
       ],
     },
@@ -37,15 +41,15 @@ export function SettingsScreen() {
       items: [
         {
           label: 'User Management',
-          onPress: () => console.log('User Management'),
+          onPress: () => navigation.navigate('UserManagement'),
         },
         {
           label: 'Business Profile',
-          onPress: () => console.log('Business Profile'),
+          onPress: () => navigation.navigate('BusinessProfile'),
         },
         {
           label: 'POS Setup',
-          onPress: () => console.log('POS Setup'),
+          onPress: () => navigation.navigate('POSSetup'),
         },
       ],
     },

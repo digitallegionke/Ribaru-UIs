@@ -8,6 +8,11 @@ import { AddStockScreen } from '../screens/AddStockScreen';
 import { ProductDetailScreen } from '../screens/ProductDetailScreen';
 import { AddCustomerScreen } from '../screens/AddCustomerScreen';
 import { AddPaymentOptionScreen } from '../screens/AddPaymentOptionScreen';
+import { ProfileSettingsScreen } from '../screens/ProfileSettingsScreen';
+import { AccountSettingsScreen } from '../screens/AccountSettingsScreen';
+import { UserManagementScreen } from '../screens/UserManagementScreen';
+import { BusinessProfileScreen } from '../screens/BusinessProfileScreen';
+import { POSSetupScreen } from '../screens/POSSetupScreen';
 
 export type RootStackParamList = {
   MainTabs: undefined;
@@ -18,6 +23,11 @@ export type RootStackParamList = {
   ProductDetail: { productId: string };
   AddCustomer: undefined;
   AddPaymentOption: undefined;
+  ProfileSettings: undefined;
+  AccountSettings: undefined;
+  UserManagement: undefined;
+  BusinessProfile: undefined;
+  POSSetup: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -37,6 +47,11 @@ export function AppNavigator() {
       <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
       <Stack.Screen name="AddCustomer" component={AddCustomerScreen} />
       <Stack.Screen name="AddPaymentOption" component={AddPaymentOptionScreen} />
+      <Stack.Screen name="ProfileSettings" component={ProfileSettingsScreen} />
+      <Stack.Screen name="AccountSettings" component={AccountSettingsScreen} />
+      <Stack.Screen name="UserManagement" component={UserManagementScreen} />
+      <Stack.Screen name="BusinessProfile" component={BusinessProfileScreen} />
+      <Stack.Screen name="POSSetup" component={POSSetupScreen} />
     </Stack.Navigator>
   );
 }
