@@ -17,6 +17,10 @@ export function ProfileSettingsScreen() {
       <View style={styles.content}>
         <Text style={styles.placeholder}>Profile settings content goes here.</Text>
       </View>
+      {/* Sign Out Button */}
+      <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate('MockLogin' as never)}>
+        <Text style={styles.signOutButtonText}>Sign Out</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -36,4 +40,17 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 18, fontWeight: '600', color: '#000' },
   content: { flex: 1, padding: 24 },
   placeholder: { fontSize: 16, color: '#6B7280' },
+  signOutButton: {
+    backgroundColor: '#F87171',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginTop: 32,
+    marginHorizontal: 24,
+  },
+  signOutButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 }); 

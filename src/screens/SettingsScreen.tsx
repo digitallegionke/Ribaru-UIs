@@ -86,6 +86,11 @@ export function SettingsScreen() {
             </View>
           ))}
         </View>
+
+        {/* Sign Out Button */}
+        <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate('MockLogin' as never)}>
+          <Text style={styles.signOutButtonText}>Sign Out</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -144,5 +149,18 @@ const styles = StyleSheet.create({
   settingsItemText: {
     fontSize: 16,
     color: '#6B7280',
+  },
+  signOutButton: {
+    backgroundColor: '#F87171',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginTop: 32,
+    marginHorizontal: 24,
+  },
+  signOutButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

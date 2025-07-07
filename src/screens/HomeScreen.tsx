@@ -17,6 +17,18 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
 
+  // Mock data
+  const recentSales = [
+    { id: '1', product: 'Granola', amount: 1200, date: 'Today, 10:30 AM' },
+    { id: '2', product: 'Trail Mix', amount: 800, date: 'Today, 9:15 AM' },
+    { id: '3', product: 'Curry Paste', amount: 2400, date: 'Yesterday, 4:20 PM' },
+  ];
+  const lowStockItems = [
+    { id: '1', name: 'Granola', quantity: 2 },
+    { id: '2', name: 'Trail Mix', quantity: 1 },
+    { id: '3', name: 'Curry Paste', quantity: 3 },
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -73,6 +85,31 @@ export function HomeScreen() {
             <Text style={styles.statsValue}>58</Text>
           </View>
         </View>
+      </View>
+
+      {/* Recent Sales */}
+      <View style={{ marginTop: 32, width: '100%', paddingHorizontal: 24 }}>
+        <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 12 }}>Recent Sales</Text>
+        {recentSales.map(sale => (
+          <View key={sale.id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', borderRadius: 12, padding: 16, marginBottom: 8 }}>
+            <View>
+              <Text style={{ fontSize: 16, fontWeight: '500' }}>{sale.product}</Text>
+              <Text style={{ color: '#6B7280', fontSize: 12 }}>{sale.date}</Text>
+            </View>
+            <Text style={{ fontWeight: 'bold', color: '#0A1FDA' }}>KES {sale.amount.toLocaleString()}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Low Stock Items */}
+      <View style={{ marginTop: 24, width: '100%', paddingHorizontal: 24 }}>
+        <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 12 }}>Low Stock Items</Text>
+        {lowStockItems.map(item => (
+          <View key={item.id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FEF3C7', borderRadius: 12, padding: 16, marginBottom: 8 }}>
+            <Text style={{ fontSize: 16 }}>{item.name}</Text>
+            <Text style={{ fontWeight: 'bold', color: '#F59E0B' }}>Qty: {item.quantity}</Text>
+          </View>
+        ))}
       </View>
 
       {/* Action Buttons */}
