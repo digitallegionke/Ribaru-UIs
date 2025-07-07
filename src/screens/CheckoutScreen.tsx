@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp as RNRouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Button, Card, Text } from '../components';
+import { COLORS, SPACING, SHADOWS, BORDER_RADIUS } from '../utils/constants';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 type CheckoutRouteProp = RNRouteProp<RootStackParamList, 'Checkout'>;
+
+interface CheckoutScreenProps {
+  amount: number;
+}
 
 export function CheckoutScreen() {
   const navigation = useNavigation<NavigationProp>();
@@ -30,7 +34,6 @@ export function CheckoutScreen() {
     navigation.navigate('MainTabs');
   };
 
-  const mono = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -38,60 +41,67 @@ export function CheckoutScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color="#000" />
+            <MaterialIcons name="arrow-back" size={24} color={COLORS.gray[700]} />
           </TouchableOpacity>
-          <Text style={[styles.headerTitle, { fontFamily: mono }]}>Checkout</Text>
+          <Text variant="h3" weight="semiBold">Checkout</Text>
           <View style={{ width: 24 }} />
         </View>
 
         {/* Content */}
         <View style={styles.content}>
           {/* Amount */}
-          <View style={styles.amountSection}>
-            <Text style={[styles.amountLabel, { fontFamily: mono }]}>Amount to be paid</Text>
-            <Text style={[styles.amountValue, { color: '#0A1FDA', fontFamily: mono }]}>KES {amount.toLocaleString()}</Text>
-          </View>
+          <Card elevation="md" padding="lg" style={styles.amountSection}>
+            <Text variant="label" color="gray.500">Amount to be paid</Text>
+            <Text variant="h1" color="primary" weight="bold" style={{ marginTop: 8 }}>KES {amount.toLocaleString()}</Text>
+          </Card>
 
           {/* Options */}
           <View style={styles.optionsSection}>
-            <TouchableOpacity style={styles.optionItem} onPress={() => navigation.navigate('AddCustomer')}>
-              <View style={styles.optionLeft}>
-                <MaterialIcons name="person-add" size={22} color="#0A1FDA" />
-                <Text style={[styles.optionText, { fontFamily: mono }]}>Add Customer</Text>
-              </View>
-              <MaterialIcons name="chevron-right" size={22} color="#0A1FDA" />
+            <TouchableOpacity onPress={() => navigation.navigate('AddCustomer')}>
+              <Card elevation="sm" padding="md" style={styles.optionItem}>
+                <View style={styles.optionLeft}>
+                  <MaterialIcons name="person-add" size={22} color={COLORS.primary} />
+                  <Text variant="body1" color="primary" weight="medium">Add Customer</Text>
+                </View>
+                <MaterialIcons name="chevron-right" size={22} color={COLORS.primary} />
+              </Card>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.optionItem} onPress={() => navigation.navigate('AddPaymentOption')}>
-              <View style={styles.optionLeft}>
-                <MaterialIcons name="credit-card" size={22} color="#0A1FDA" />
-                <Text style={[styles.optionText, { fontFamily: mono }]}>Add Payment Option</Text>
-              </View>
-              <MaterialIcons name="chevron-right" size={22} color="#0A1FDA" />
+            <TouchableOpacity onPress={() => navigation.navigate('AddPaymentOption')}>
+              <Card elevation="sm" padding="md" style={styles.optionItem}>
+                <View style={styles.optionLeft}>
+                  <MaterialIcons name="credit-card" size={22} color={COLORS.primary} />
+                  <Text variant="body1" color="primary" weight="medium">Add Payment Option</Text>
+                </View>
+                <MaterialIcons name="chevron-right" size={22} color={COLORS.primary} />
+              </Card>
             </TouchableOpacity>
           </View>
 
           {/* Add Note */}
           <View style={styles.noteSection}>
-            <Text style={[styles.noteLabel, { fontFamily: mono }]}>Add Note</Text>
+            <Text variant="body1" color="primary" weight="medium" style={{ marginBottom: 8 }}>Add Note</Text>
             <TextInput
-              style={[styles.noteInput, { fontFamily: mono }]}
+              style={styles.noteInput}
               placeholder="Note"
               value={note}
               onChangeText={setNote}
               multiline
               numberOfLines={4}
               textAlignVertical="top"
-              placeholderTextColor="#C4C4C4"
+              placeholderTextColor={COLORS.gray[400]}
             />
           </View>
         </View>
 
         {/* Confirm Button */}
         <View style={styles.bottomSection}>
-          <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmSale}>
-            <Text style={[styles.confirmButtonText, { fontFamily: mono }]}>Confirm Sale</Text>
-          </TouchableOpacity>
+          <Button
+            title="Confirm Sale"
+            onPress={handleConfirmSale}
+            variant="primary"
+            size="lg"
+          />
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -101,108 +111,57 @@ export function CheckoutScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: COLORS.background.primary,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    backgroundColor: 'white',
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.lg,
+    backgroundColor: COLORS.background.card,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
+    borderBottomColor: COLORS.gray[200],
   },
   content: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 24,
+    paddingHorizontal: SPACING.xl,
+    paddingTop: SPACING.xl,
   },
   amountSection: {
-    marginBottom: 32,
-    backgroundColor: '#F6F7FF',
-    borderRadius: 16,
-    padding: 20,
-    marginTop: 16,
-  },
-  amountLabel: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 8,
-  },
-  amountValue: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#0A1FDA',
-    letterSpacing: 1,
-  },
-  currency: {
-    fontSize: 16,
-    color: '#6B7280',
+    marginBottom: SPACING['3xl'],
+    marginTop: SPACING.lg,
   },
   optionsSection: {
-    marginBottom: 32,
-    gap: 12,
+    marginBottom: SPACING['3xl'],
+    gap: SPACING.lg,
   },
   optionItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F6F7FF',
-    borderRadius: 12,
-    padding: 18,
-    borderWidth: 1.5,
-    borderColor: '#E9EBFF',
   },
   optionLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  optionText: {
-    fontSize: 16,
-    color: '#0A1FDA',
-    marginLeft: 12,
-    fontWeight: '500',
+    gap: SPACING.lg,
   },
   noteSection: {
-    marginBottom: 32,
-  },
-  noteLabel: {
-    fontSize: 14,
-    color: '#0A1FDA',
-    fontWeight: '500',
-    marginBottom: 8,
+    marginBottom: SPACING['3xl'],
   },
   noteInput: {
-    backgroundColor: '#F6F7FF',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: COLORS.background.card,
+    borderRadius: BORDER_RADIUS.lg,
+    padding: SPACING.lg,
     fontSize: 16,
-    borderWidth: 1.5,
-    borderColor: '#E9EBFF',
+    borderWidth: 1,
+    borderColor: COLORS.gray[200],
     minHeight: 100,
-    color: '#222',
+    color: COLORS.gray[900],
+    ...SHADOWS.sm,
   },
   bottomSection: {
-    paddingHorizontal: 24,
-    paddingBottom: 24,
-  },
-  confirmButton: {
-    backgroundColor: '#0A1FDA',
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-    marginTop: 12,
-  },
-  confirmButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: 1,
+    paddingHorizontal: SPACING.xl,
+    paddingBottom: SPACING.xl,
   },
 });
