@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Text } from '../components';
 
 export function OnboardingWelcomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -11,13 +12,13 @@ export function OnboardingWelcomeScreen() {
       <View style={styles.logoContainer}>
         <Image source={require('../../assets/icon.png')} style={styles.logo} />
       </View>
-      <Text style={styles.title}>Welcome to Ribaru</Text>
-      <Text style={styles.subtitle}>Your smart inventory and sales companion.</Text>
+      <Text variant="h1" weight="bold" style={styles.title}>Welcome to Ribaru</Text>
+      <Text variant="body1" color="gray.500" style={styles.subtitle}>Your smart inventory and sales companion.</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('OnboardingFeatures' as never)}>
-        <Text style={styles.buttonText}>Next</Text>
+        <Text variant="button" weight="semiBold" style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate('MockLogin' as never)}>
-        <Text style={styles.skipButtonText}>Skip</Text>
+        <Text variant="body1" color="gray.500" style={styles.skipButtonText}>Skip</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

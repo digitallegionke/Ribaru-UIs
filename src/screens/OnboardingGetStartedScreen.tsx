@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Text } from '../components';
 
 export function OnboardingGetStartedScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Get Started</Text>
-      <Text style={styles.subtitle}>Ready to take control of your business?</Text>
+      <Text variant="h1" weight="bold" style={styles.title}>Get Started</Text>
+      <Text variant="body1" color="gray.500" style={styles.subtitle}>Ready to take control of your business?</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MockLogin' as never)}>
-        <Text style={styles.buttonText}>Get Started</Text>
+        <Text variant="button" weight="semiBold" style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
