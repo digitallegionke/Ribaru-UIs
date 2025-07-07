@@ -41,9 +41,9 @@ export function CheckoutScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color={COLORS.gray[700]} />
+            <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
-          <Text variant="h3" weight="semiBold">Checkout</Text>
+          <Text variant="h2" weight="bold" color="primary">Checkout</Text>
           <View style={{ width: 24 }} />
         </View>
 
@@ -80,7 +80,7 @@ export function CheckoutScreen() {
 
           {/* Add Note */}
           <View style={styles.noteSection}>
-            <Text variant="body1" color="primary" weight="medium" style={{ marginBottom: 8 }}>Add Note</Text>
+            <Text variant="label" color="primary" style={{ marginBottom: 8 }}>Add Note</Text>
             <TextInput
               style={styles.noteInput}
               placeholder="Note"

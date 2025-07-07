@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
@@ -13,6 +12,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Text } from '../components';
+import { COLORS } from '../utils/constants';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -41,25 +42,25 @@ export function AddSaleScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color="#000" />
+            <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Add Sale</Text>
+          <Text variant="h2" weight="bold" color="primary" style={styles.headerTitle}>Add Sale</Text>
           <View style={{ width: 24 }} />
         </View>
 
         {/* Form */}
         <View style={styles.form}>
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Select Item</Text>
+            <Text variant="label" color="primary" style={styles.label}>Select Item</Text>
             <TouchableOpacity style={styles.selectButton} onPress={() => setShowItemList(!showItemList)}>
-              <Text style={styles.selectButtonText}>{selectedItem.name}</Text>
-              <MaterialIcons name="expand-more" size={20} color="#0A1FDA" />
+              <Text variant="body1" color="gray.500" style={styles.selectButtonText}>{selectedItem.name}</Text>
+              <MaterialIcons name="expand-more" size={20} color={COLORS.primary} />
             </TouchableOpacity>
             {showItemList && (
               <View style={styles.dropdownList}>
                 {mockItems.map(item => (
                   <TouchableOpacity key={item.name} style={styles.dropdownItem} onPress={() => { setSelectedItem(item); setShowItemList(false); }}>
-                    <Text style={styles.dropdownItemText}>{item.name}</Text>
+                    <Text variant="body1" style={styles.dropdownItemText}>{item.name}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -67,7 +68,7 @@ export function AddSaleScreen() {
           </View>
 
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Quantity</Text>
+            <Text variant="label" color="primary" style={styles.label}>Quantity</Text>
             <TextInput
               style={styles.input}
               value={quantity}
@@ -78,9 +79,9 @@ export function AddSaleScreen() {
           </View>
 
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Price per Item</Text>
+            <Text variant="label" color="primary" style={styles.label}>Price per Item</Text>
             <View style={styles.priceDisplay}>
-              <Text style={styles.priceText}>KES {selectedItem.price.toLocaleString()}</Text>
+              <Text variant="body1" weight="medium" style={styles.priceText}>KES {selectedItem.price.toLocaleString()}</Text>
             </View>
           </View>
         </View>
@@ -92,7 +93,7 @@ export function AddSaleScreen() {
             onPress={handleAddToCart}
             disabled={!selectedItem}
           >
-            <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+            <Text variant="button" weight="semiBold" style={styles.addToCartButtonText}>Add to Cart</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -103,7 +104,7 @@ export function AddSaleScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: COLORS.background.primary,
   },
   header: {
     flexDirection: 'row',
@@ -113,12 +114,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     backgroundColor: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    borderBottomColor: COLORS.gray[200],
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
+    fontSize: 20,
+    fontWeight: '700',
+    color: COLORS.primary,
   },
   form: {
     flex: 1,
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#0A1FDA',
+    color: COLORS.primary,
     fontWeight: '500',
     marginBottom: 8,
   },
@@ -140,11 +141,11 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: COLORS.gray[200],
   },
   selectButtonText: {
     fontSize: 16,
-    color: '#6B7280',
+    color: COLORS.gray[500],
   },
   input: {
     backgroundColor: 'white',
@@ -153,17 +154,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: COLORS.gray[200],
   },
   priceDisplay: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: COLORS.background.secondary,
     borderRadius: 12,
     paddingVertical: 16,
     paddingHorizontal: 16,
   },
   priceText: {
     fontSize: 16,
-    color: '#000',
+    color: COLORS.gray[900],
     fontWeight: '500',
   },
   bottomSection: {
@@ -171,13 +172,13 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   addToCartButton: {
-    backgroundColor: '#0A1FDA',
+    backgroundColor: COLORS.primary,
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: '#9CA3AF',
+    backgroundColor: COLORS.gray[400],
   },
   addToCartButtonText: {
     color: 'white',
@@ -195,6 +196,6 @@ const styles = StyleSheet.create({
   },
   dropdownItemText: {
     fontSize: 16,
-    color: '#000',
+    color: COLORS.gray[900],
   },
 });

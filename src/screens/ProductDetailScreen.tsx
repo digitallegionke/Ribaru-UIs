@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
@@ -14,6 +13,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp as RNRouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Text } from '../components';
+import { COLORS } from '../utils/constants';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 type ProductDetailScreenProps = {
@@ -81,13 +82,13 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'IN STOCK':
-        return '#10B981';
+        return COLORS.success;
       case 'LOW STOCK':
-        return '#F59E0B';
+        return COLORS.warning;
       case 'OUT OF STOCK':
-        return '#EF4444';
+        return COLORS.error;
       default:
-        return '#6B7280';
+        return COLORS.gray[500];
     }
   };
 
@@ -98,13 +99,13 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { fontFamily: mono }]} numberOfLines={1}>
+        <Text variant="h2" weight="bold" color="primary" style={styles.headerTitle} numberOfLines={1}>
           {product.name}
         </Text>
         <TouchableOpacity>
-          <MaterialIcons name="menu" size={28} color="#0A1FDA" />
+          <MaterialIcons name="menu" size={28} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
 
@@ -112,45 +113,45 @@ export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
         {/* Product Name */}
         <View style={styles.sectionBig}>
           <View style={styles.sectionHeaderBig}>
-            <Text style={[styles.sectionLabelBig, { fontFamily: mono }]}>Product Name</Text>
+            <Text variant="label" color="primary" style={styles.sectionLabelBig}>Product Name</Text>
             <TouchableOpacity>
-              <MaterialIcons name="edit" size={18} color="#0A1FDA" />
-              <Text style={[styles.editText, { fontFamily: mono }]}>EDIT</Text>
+              <MaterialIcons name="edit" size={18} color={COLORS.primary} />
+              <Text variant="caption" color="primary" style={styles.editText}>EDIT</Text>
             </TouchableOpacity>
           </View>
-          <Text style={[styles.productNameBig, { fontFamily: mono }]}>{product.name}</Text>
+          <Text variant="h3" weight="bold" style={styles.productNameBig}>{product.name}</Text>
         </View>
 
         {/* Inventory */}
         <View style={styles.sectionBig}>
-          <Text style={[styles.sectionTitleBig, { fontFamily: mono }]}>Inventory</Text>
+          <Text variant="h3" weight="bold" style={styles.sectionTitleBig}>Inventory</Text>
           <View style={styles.inventoryRowBig}>
             <View style={styles.inventoryCellBig}>
-              <Text style={[styles.inventoryLabelBig, { fontFamily: mono }]}>Available</Text>
-              <Text style={[styles.inventoryValueBig, { fontFamily: mono }]}>{product.quantity}</Text>
+              <Text variant="label" color="gray.500" style={styles.inventoryLabelBig}>Available</Text>
+              <Text variant="h2" weight="bold" style={styles.inventoryValueBig}>{product.quantity}</Text>
             </View>
             <View style={styles.inventoryCellBig}>
-              <Text style={[styles.inventoryLabelBig, { fontFamily: mono }]}>Committed</Text>
-              <Text style={[styles.inventoryValueBig, { fontFamily: mono }]}>0</Text>
+              <Text variant="label" color="gray.500" style={styles.inventoryLabelBig}>Committed</Text>
+              <Text variant="h2" weight="bold" style={styles.inventoryValueBig}>0</Text>
             </View>
           </View>
-          <Text style={[styles.lastUpdated, { fontFamily: mono }]}>Last updated Today 1:05 PM</Text>
+          <Text variant="caption" color="gray.400" style={styles.lastUpdated}>Last updated Today 1:05 PM</Text>
         </View>
 
         {/* More Details */}
         <View style={styles.sectionBig}>
-          <Text style={[styles.sectionTitleBig, { fontFamily: mono }]}>More details</Text>
+          <Text variant="h3" weight="bold" style={styles.sectionTitleBig}>More details</Text>
           <View style={styles.detailRowBig}>
-            <Text style={[styles.detailLabelBig, { fontFamily: mono }]}>Price</Text>
-            <Text style={[styles.priceValueBig, { fontFamily: mono }]}>KES 336.00</Text>
+            <Text variant="label" color="gray.500" style={styles.detailLabelBig}>Price</Text>
+            <Text variant="body1" weight="medium" style={styles.priceValueBig}>KES {product.price.toLocaleString()}</Text>
           </View>
           <TouchableOpacity style={styles.detailRowBig}>
-            <Text style={[styles.detailLabelBig, { fontFamily: mono }]}>Description</Text>
-            <MaterialIcons name="chevron-right" size={18} color="#0A1FDA" />
+            <Text variant="label" color="gray.500" style={styles.detailLabelBig}>Description</Text>
+            <MaterialIcons name="chevron-right" size={18} color={COLORS.primary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.detailRowBig}>
-            <Text style={[styles.detailLabelBig, { fontFamily: mono }]}>Vendor, category, type, tag</Text>
-            <MaterialIcons name="chevron-right" size={18} color="#0A1FDA" />
+            <Text variant="label" color="gray.500" style={styles.detailLabelBig}>Vendor, category, type, tag</Text>
+            <MaterialIcons name="chevron-right" size={18} color={COLORS.primary} />
           </TouchableOpacity>
         </View>
       </ScrollView>

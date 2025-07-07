@@ -48,54 +48,32 @@ export function StockScreen() {
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const renderItem = ({ item }: any) => (
-    <TouchableOpacity
-      style={styles.stockItem}
-      onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
-      activeOpacity={0.85}
-    >
-      <View style={styles.stockItemRow}>
-        <Image source={item.image} style={styles.productImage} />
-        <View style={styles.stockItemInfo}>
-          <Text variant="body1" weight="semiBold" style={styles.stockItemName}>{item.name}</Text>
-          <View style={styles.stockItemMeta}>
-            <Text variant="caption" style={styles.stockItemQuantity}>Qty: {item.quantity}</Text>
-            <Text variant="caption" color={getStatusColor(item.status)} style={styles.stockItemStatus}>{item.status}</Text>
-          </View>
-        </View>
-        <MaterialIcons name="chevron-right" size={24} color={COLORS.gray[400]} />
-      </View>
-    </TouchableOpacity>
-  );
-
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
-        <Text variant="h2" weight="bold" style={styles.headerTitle}>Stock</Text>
+        <Text variant="h2" weight="bold" color="primary" style={styles.headerTitle}>Stock</Text>
         <TouchableOpacity>
           <MaterialIcons name="menu" size={28} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
 
       {/* Stats Cards */}
-      <View style={styles.statsCardBig}>
-        <View style={styles.statsRowBig}>
-          <View style={styles.statsCellBig}>
-            <Text variant="label" color="gray.500">TOTAL ITEMS</Text>
-            <Text variant="h3" weight="semiBold" style={styles.statsValueBig}>150</Text>
-          </View>
-          <View style={styles.statsCellBig}>
-            <Text variant="label" color="gray.500">LOW STOCK ITEMS</Text>
-            <Text variant="h3" weight="semiBold" color="error" style={styles.statsValueBig}>12</Text>
-          </View>
-          <View style={styles.statsCellBig}>
-            <Text variant="label" color="gray.500">OUT OF STOCK</Text>
-            <Text variant="h3" weight="semiBold" color="error" style={styles.statsValueBig}>5</Text>
-          </View>
+      <View style={styles.statsRowBig}>
+        <View style={styles.statsCardBig}>
+          <Text variant="label" color="gray.500">TOTAL ITEMS</Text>
+          <Text variant="h3" weight="bold" color="primary" style={styles.statsValueBig}>150</Text>
+        </View>
+        <View style={styles.statsCardBig}>
+          <Text variant="label" color="gray.500">LOW STOCK ITEMS</Text>
+          <Text variant="h3" weight="bold" color="warning" style={styles.statsValueBig}>12</Text>
+        </View>
+        <View style={styles.statsCardBig}>
+          <Text variant="label" color="gray.500">OUT OF STOCK</Text>
+          <Text variant="h3" weight="bold" color="error" style={styles.statsValueBig}>5</Text>
         </View>
       </View>
 
@@ -117,7 +95,25 @@ export function StockScreen() {
       {/* Stock List */}
       <FlatList
         data={filteredProducts}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.stockCard}
+            onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
+            activeOpacity={0.85}
+          >
+            <View style={styles.stockItemRow}>
+              <Image source={item.image} style={styles.productImage} />
+              <View style={styles.stockItemInfo}>
+                <Text variant="body1" weight="semiBold" style={styles.stockItemName}>{item.name}</Text>
+                <View style={styles.stockItemMeta}>
+                  <Text variant="caption" style={styles.stockItemQuantity}>Qty: {item.quantity}</Text>
+                  <Text variant="caption" color={getStatusColor(item.status)} style={styles.stockItemStatus}>{item.status}</Text>
+                </View>
+              </View>
+              <MaterialIcons name="chevron-right" size={24} color={COLORS.gray[400]} />
+            </View>
+          </TouchableOpacity>
+        )}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.stockList}
         ListEmptyComponent={<Text variant="body1" color="gray.500" style={{ textAlign: 'center', marginTop: 32 }}>No items found.</Text>}
@@ -129,7 +125,7 @@ export function StockScreen() {
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate('AddStock')}>
           <Text variant="button" weight="semiBold" style={styles.primaryButtonText}>Add Stock</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.secondaryButton} onPress={() => {/* Search with Barcode */}}>
+        <TouchableOpacity style={styles.secondaryButton} onPress={() => {}}>
           <Text variant="button" weight="semiBold" style={styles.secondaryButtonText}>Search with Barcode</Text>
         </TouchableOpacity>
       </View>
@@ -157,6 +153,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: COLORS.primary,
   },
+  statsRowBig: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   statsCardBig: {
     backgroundColor: COLORS.primaryLight,
     borderRadius: 16,
@@ -167,14 +167,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.04,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
-  },
-  statsRowBig: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  statsCellBig: {
-    flex: 1,
-    alignItems: 'center',
   },
   statsValueBig: {
     fontSize: 22,
@@ -209,7 +201,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 16,
   },
-  stockItem: {
+  stockCard: {
     backgroundColor: 'white',
     borderRadius: 16,
     padding: 16,

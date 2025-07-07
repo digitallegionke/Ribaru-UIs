@@ -12,6 +12,25 @@ interface TextProps {
   weight?: 'regular' | 'medium' | 'semiBold' | 'bold';
 }
 
+function isFigure(child: React.ReactNode): boolean {
+  if (typeof child === 'number') return true;
+  if (typeof child === 'string') {
+    // Allow numbers, commas, periods, spaces, and currency symbols
+    return /^[$€£¥₩₹\d,.\s+-]+$/.test(child.trim());
+  }
+  return false;
+}
+
+function resolveColor(color: keyof typeof COLORS | string): string {
+  // If color is a key in COLORS and resolves to a string, use it
+  if (typeof color === 'string' && COLORS[color as keyof typeof COLORS]) {
+    const resolved = COLORS[color as keyof typeof COLORS];
+    if (typeof resolved === 'string') return resolved;
+  }
+  // Otherwise, return the color as-is
+  return color as string;
+}
+
 export function Text({
   children,
   variant = 'body1',
@@ -21,15 +40,21 @@ export function Text({
   numberOfLines,
   weight,
 }: TextProps) {
-  const textColor = COLORS[color as keyof typeof COLORS] || color;
-  
-  const textStyle = [
+  // Determine font family: use mono for figures, otherwise use weight or regular
+  let fontFamily = FONTS.regular;
+  if (isFigure(children)) {
+    fontFamily = FONTS.mono;
+  } else if (weight) {
+    fontFamily = FONTS[weight];
+  }
+
+  const textStyle: TextStyle[] = [
     styles.base,
     TYPOGRAPHY[variant],
-    { color: textColor },
+    { color: resolveColor(color) },
     { textAlign: align },
-    weight && { fontFamily: FONTS[weight] },
-    style,
+    { fontFamily },
+    style as TextStyle,
   ];
 
   return (

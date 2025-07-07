@@ -41,11 +41,11 @@ export const COLORS = {
 };
 
 export const FONTS = {
-  regular: 'Inter',
-  medium: 'Inter',
-  semiBold: 'Inter',
-  bold: 'Inter',
-  mono: Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' }),
+  regular: 'GeistSans',
+  medium: 'GeistSans',
+  semiBold: 'GeistSans',
+  bold: 'GeistSans',
+  mono: 'GeistMono',
 };
 
 export const TYPOGRAPHY = {

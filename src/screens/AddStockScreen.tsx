@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
@@ -14,6 +13,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Text } from '../components';
+import { COLORS } from '../utils/constants';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -39,27 +40,27 @@ export function AddStockScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color="#000" />
+            <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Add Stock</Text>
+          <Text variant="h2" weight="bold" color="primary" style={styles.headerTitle}>Add Stock</Text>
           <TouchableOpacity>
-            <MaterialIcons name="menu" size={24} color="#000" />
+            <MaterialIcons name="menu" size={24} color={COLORS.primary} />
           </TouchableOpacity>
         </View>
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           {/* Product Name */}
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Product</Text>
+            <Text variant="label" color="primary" style={styles.label}>Product</Text>
             <TouchableOpacity style={styles.selectButton} onPress={() => setShowProductList(!showProductList)}>
-              <Text style={styles.selectButtonText}>{selectedProduct}</Text>
-              <MaterialIcons name="expand-more" size={20} color="#0A1FDA" />
+              <Text variant="body1" color="gray.500" style={styles.selectButtonText}>{selectedProduct}</Text>
+              <MaterialIcons name="expand-more" size={20} color={COLORS.primary} />
             </TouchableOpacity>
             {showProductList && (
               <View style={styles.dropdownList}>
                 {mockProducts.map(product => (
                   <TouchableOpacity key={product} style={styles.dropdownItem} onPress={() => { setSelectedProduct(product); setShowProductList(false); }}>
-                    <Text style={styles.dropdownItemText}>{product}</Text>
+                    <Text variant="body1" style={styles.dropdownItemText}>{product}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -68,7 +69,7 @@ export function AddStockScreen() {
 
           {/* Quantity */}
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Quantity</Text>
+            <Text variant="label" color="primary" style={styles.label}>Quantity</Text>
             <TextInput
               style={styles.input}
               value={quantity}
@@ -80,16 +81,16 @@ export function AddStockScreen() {
 
           {/* Supplier */}
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Supplier</Text>
+            <Text variant="label" color="primary" style={styles.label}>Supplier</Text>
             <TouchableOpacity style={styles.selectButton} onPress={() => setShowSupplierList(!showSupplierList)}>
-              <Text style={styles.selectButtonText}>{supplier}</Text>
-              <MaterialIcons name="expand-more" size={20} color="#0A1FDA" />
+              <Text variant="body1" color="gray.500" style={styles.selectButtonText}>{supplier}</Text>
+              <MaterialIcons name="expand-more" size={20} color={COLORS.primary} />
             </TouchableOpacity>
             {showSupplierList && (
               <View style={styles.dropdownList}>
                 {mockSuppliers.map(sup => (
                   <TouchableOpacity key={sup} style={styles.dropdownItem} onPress={() => { setSupplier(sup); setShowSupplierList(false); }}>
-                    <Text style={styles.dropdownItemText}>{sup}</Text>
+                    <Text variant="body1" style={styles.dropdownItemText}>{sup}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -100,7 +101,7 @@ export function AddStockScreen() {
         {/* Add Stock Button */}
         <View style={styles.bottomSection}>
           <TouchableOpacity style={styles.addStockButton} onPress={handleSave}>
-            <Text style={styles.addStockButtonText}>Save</Text>
+            <Text variant="button" weight="semiBold" style={styles.addStockButtonText}>Save</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -111,7 +112,7 @@ export function AddStockScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: COLORS.background.primary,
   },
   header: {
     flexDirection: 'row',
@@ -121,12 +122,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     backgroundColor: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    borderBottomColor: COLORS.gray[200],
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
+    fontSize: 20,
+    fontWeight: '700',
+    color: COLORS.primary,
   },
   content: {
     flex: 1,
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#0A1FDA',
+    color: COLORS.primary,
     fontWeight: '500',
     marginBottom: 8,
   },
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: COLORS.gray[200],
   },
   textArea: {
     minHeight: 100,
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
   },
   addVariantsText: {
     fontSize: 16,
-    color: '#0A1FDA',
+    color: COLORS.primary,
     marginLeft: 8,
     fontWeight: '500',
   },
@@ -174,11 +175,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: COLORS.gray[200],
   },
   selectText: {
     fontSize: 16,
-    color: '#000',
+    color: COLORS.gray[900],
   },
   priceInputContainer: {
     backgroundColor: 'white',
@@ -186,11 +187,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: COLORS.gray[200],
   },
   currencyPrefix: {
     fontSize: 16,
-    color: '#6B7280',
+    color: COLORS.gray[500],
     paddingLeft: 16,
     fontWeight: '500',
   },

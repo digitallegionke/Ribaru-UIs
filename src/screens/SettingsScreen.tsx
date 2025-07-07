@@ -1,17 +1,17 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import { Text } from '../components';
+import { COLORS } from '../utils/constants';
 
 interface SettingsGroup {
   title: string;
@@ -23,7 +23,6 @@ interface SettingsGroup {
 
 export function SettingsScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const mono = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' });
   const settingsGroups: SettingsGroup[] = [
     {
       title: 'Account Setting',
@@ -63,20 +62,20 @@ export function SettingsScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color="#000" />
+            <MaterialIcons name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
-          <Text style={[styles.headerTitle, { fontFamily: mono }]}>Settings</Text>
+          <Text variant="h2" weight="bold" color="primary" style={styles.headerTitle}>Settings</Text>
           <TouchableOpacity>
-            <MaterialIcons name="menu" size={28} color="#0A1FDA" />
+            <MaterialIcons name="menu" size={28} color={COLORS.primary} />
           </TouchableOpacity>
         </View>
 
         {/* Settings Groups */}
         <View style={styles.settingsContainer}>
           {settingsGroups.map((group, groupIndex) => (
-            <View key={groupIndex} style={styles.settingsGroup}>
+            <View key={groupIndex} style={styles.settingsGroupCard}>
               <View style={styles.groupHeader}>
-                <Text style={[styles.groupTitle, { fontFamily: mono }]}>{group.title}</Text>
+                <Text variant="h3" weight="bold" color="primary" style={styles.groupTitle}>{group.title}</Text>
               </View>
               <View style={styles.groupContent}>
                 {group.items.map((item, itemIndex) => (
@@ -87,9 +86,10 @@ export function SettingsScreen() {
                       itemIndex !== group.items.length - 1 && styles.settingsItemBorder,
                     ]}
                     onPress={item.onPress}
+                    activeOpacity={0.85}
                   >
-                    <Text style={[styles.settingsItemText, { fontFamily: mono }]}>{item.label}</Text>
-                    <MaterialIcons name="chevron-right" size={20} color="#0A1FDA" />
+                    <Text variant="body1" weight="medium" style={styles.settingsItemText}>{item.label}</Text>
+                    <MaterialIcons name="chevron-right" size={20} color={COLORS.primary} />
                   </TouchableOpacity>
                 ))}
               </View>
@@ -99,7 +99,7 @@ export function SettingsScreen() {
 
         {/* Sign Out Button */}
         <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate('MockLogin' as never)}>
-          <Text style={styles.signOutButtonText}>Sign Out</Text>
+          <Text variant="button" weight="semiBold" style={styles.signOutButtonText}>Sign Out</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -109,43 +109,47 @@ export function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: COLORS.background.primary,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
     paddingTop: 24,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
     backgroundColor: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    borderBottomColor: COLORS.gray[200],
+    marginBottom: 8,
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 32,
+    fontSize: 22,
+    fontWeight: '700',
+    color: COLORS.primary,
   },
   settingsContainer: {
-    gap: 32,
-    marginTop: 16,
+    gap: 24,
+    marginTop: 8,
   },
-  settingsGroup: {
-    marginBottom: 16,
+  settingsGroupCard: {
+    marginBottom: 8,
     borderRadius: 16,
     overflow: 'hidden',
-    backgroundColor: '#F6F7FF',
-    borderWidth: 1.5,
-    borderColor: '#E9EBFF',
+    backgroundColor: COLORS.background.secondary,
+    borderWidth: 1,
+    borderColor: COLORS.primaryLight,
+    shadowColor: '#000',
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 1 },
   },
   groupHeader: {
-    backgroundColor: '#E9EBFF',
+    backgroundColor: COLORS.primaryLight,
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderTopLeftRadius: 16,
@@ -154,7 +158,6 @@ const styles = StyleSheet.create({
   groupTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#0A1FDA',
     letterSpacing: 1,
   },
   groupContent: {
@@ -167,25 +170,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 18,
+    borderRadius: 12,
   },
   settingsItemBorder: {
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: COLORS.background.secondary,
   },
   settingsItemText: {
     fontSize: 16,
-    color: '#374151',
+    color: COLORS.gray[900],
     fontWeight: '500',
     letterSpacing: 0.5,
   },
   signOutButton: {
-    backgroundColor: '#F87171',
+    backgroundColor: COLORS.error,
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 32,
-    marginHorizontal: 24,
+    marginHorizontal: 16,
     shadowColor: '#000',
     shadowOpacity: 0.04,
     shadowRadius: 8,

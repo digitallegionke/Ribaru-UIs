@@ -63,31 +63,27 @@ export function SalesScreen() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
+          <MaterialIcons name="arrow-back" size={24} color="#0A1FDA" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Sales</Text>
+        <Text variant="h1" weight="bold" color="primary" style={styles.headerTitle}>Sales</Text>
         <View style={{ width: 24 }} />
       </View>
 
       {/* Stats Card */}
       <View style={styles.statsCard}>
         <View style={styles.todaysSales}>
-          <Text style={styles.statsLabel}>TODAY'S SALES</Text>
-          <Text style={styles.todaysSalesAmount}>
-            <Text style={styles.currency}>KES </Text>16,788
-          </Text>
+          <Text variant="label" color="gray.500" style={styles.statsLabel}>TODAY'S SALES</Text>
+          <Text variant="h1" weight="bold" color="primary" style={styles.todaysSalesAmount}>16,788</Text>
         </View>
 
         <View style={styles.statsGrid}>
           <View style={styles.statsItem}>
-            <Text style={styles.statsLabel}>TOTAL SALES</Text>
-            <Text style={styles.statsValue}>
-              <Text style={styles.currency}>KES </Text>45,850
-            </Text>
+            <Text variant="label" color="gray.500" style={styles.statsLabel}>TOTAL SALES</Text>
+            <Text variant="h3" weight="semiBold" color="primary" style={styles.statsValue}>45,850</Text>
           </View>
           <View style={styles.statsItem}>
-            <Text style={styles.statsLabel}>TOTAL ITEMS SOLD</Text>
-            <Text style={styles.statsValue}>150</Text>
+            <Text variant="label" color="gray.500" style={styles.statsLabel}>TOTAL ITEMS SOLD</Text>
+            <Text variant="h3" weight="semiBold" color="primary" style={styles.statsValue}>150</Text>
           </View>
         </View>
       </View>
@@ -96,21 +92,21 @@ export function SalesScreen() {
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
           <MaterialIcons name="search" size={20} color="#0A1FDA" />
-          <Text style={styles.searchPlaceholder}>Search sales...</Text>
+          <Text variant="body2" color="gray.400" style={styles.searchPlaceholder}>Search sales...</Text>
         </View>
       </View>
 
       {/* Recent Sales */}
       <View style={styles.salesSection}>
-        <Text style={styles.sectionTitle}>RECENT SALES</Text>
+        <Text variant="h3" weight="semiBold" color="primary" style={styles.sectionTitle}>RECENT SALES</Text>
         {sales.map(sale => (
           <View key={sale.id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', borderRadius: 12, padding: 16, marginBottom: 8 }}>
             <View>
-              <Text style={{ fontSize: 16, fontWeight: '500' }}>{sale.product}</Text>
-              <Text style={{ color: '#6B7280', fontSize: 12 }}>{sale.date}</Text>
-              <Text style={{ color: '#6B7280', fontSize: 12 }}>Qty: {sale.quantity}</Text>
+              <Text variant="body1" weight="medium">{sale.product}</Text>
+              <Text variant="caption" color="gray.500">{sale.date}</Text>
+              <Text variant="caption" color="gray.500">Qty: {sale.quantity}</Text>
             </View>
-            <Text style={{ fontWeight: 'bold', color: '#0A1FDA' }}>KES {sale.total.toLocaleString()}</Text>
+            <Text variant="h3" weight="bold" color="primary">KES {sale.total.toLocaleString()}</Text>
           </View>
         ))}
       </View>

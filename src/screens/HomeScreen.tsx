@@ -74,7 +74,7 @@ export function HomeScreen() {
         {/* Welcome Section */}
         <View style={styles.welcomeSection}>
           <View style={styles.welcomeText}>
-            <Text variant="h1" weight="bold">Hey Kevin</Text>
+            <Text variant="h1" weight="bold" color="primary" style={{ marginBottom: 2 }}>Hey Kevin</Text>
             <Text variant="body1" color="gray.500">Welcome Back</Text>
           </View>
         </View>
@@ -87,11 +87,11 @@ export function HomeScreen() {
             <View style={styles.statsGridBig}>
               <View style={styles.statsCellBig}>
                 <Text variant="label" color="gray.500">TOTAL STOCK VALUE</Text>
-                <Text variant="h3" weight="semiBold" style={{ marginTop: 4 }}>KES 45,850</Text>
+                <Text variant="h3" weight="semiBold" color="primary" style={{ marginTop: 4 }}>KES 45,850</Text>
               </View>
               <View style={styles.statsCellBig}>
                 <Text variant="label" color="gray.500">TOTAL ITEMS IN STOCK</Text>
-                <Text variant="h3" weight="semiBold" style={{ marginTop: 4 }}>150</Text>
+                <Text variant="h3" weight="semiBold" color="primary" style={{ marginTop: 4 }}>150</Text>
               </View>
               <View style={styles.statsCellBig}>
                 <Text variant="label" color="gray.500">LOW STOCK ITEMS</Text>
@@ -99,7 +99,7 @@ export function HomeScreen() {
               </View>
               <View style={styles.statsCellBig}>
                 <Text variant="label" color="gray.500">YOUR CUSTOMERS</Text>
-                <Text variant="h3" weight="semiBold" style={{ marginTop: 4 }}>58</Text>
+                <Text variant="h3" weight="semiBold" color="primary" style={{ marginTop: 4 }}>58</Text>
               </View>
             </View>
           </Card>
@@ -107,7 +107,7 @@ export function HomeScreen() {
 
         {/* Recent Sales */}
         <View style={styles.sectionContainer}>
-          <Text variant="h3" weight="semiBold" style={{ marginBottom: 16 }}>Recent Sales</Text>
+          <Text variant="h3" weight="semiBold" color="primary" style={{ marginBottom: 16 }}>Recent Sales</Text>
           {recentSales.map(sale => (
             <TouchableOpacity
               key={sale.id}
@@ -120,7 +120,7 @@ export function HomeScreen() {
                     <Text variant="body1" weight="medium">{sale.product}</Text>
                     <Text variant="caption" color="gray.500">{sale.date}</Text>
                   </View>
-                  <Text variant="body1" weight="bold" color="primary">KES {sale.amount.toLocaleString()}</Text>
+                  <Text variant="h3" weight="bold" color="primary">KES {sale.amount.toLocaleString()}</Text>
                 </View>
               </Card>
             </TouchableOpacity>
@@ -129,7 +129,7 @@ export function HomeScreen() {
 
         {/* Low Stock Items */}
         <View style={styles.sectionContainer}>
-          <Text variant="h3" weight="semiBold" style={{ marginBottom: 16 }}>Low Stock Items</Text>
+          <Text variant="h3" weight="semiBold" color="primary" style={{ marginBottom: 16 }}>Low Stock Items</Text>
           {lowStockItems.map(item => (
             <Card key={item.id} elevation="sm" padding="md" style={{ marginBottom: 8, backgroundColor: COLORS.warningLight }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
