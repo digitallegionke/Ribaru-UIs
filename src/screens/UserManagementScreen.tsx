@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -21,8 +21,28 @@ export function UserManagementScreen() {
     { id: '7', name: 'Carlos Mendez', role: 'Manager', status: 'Active' },
   ];
 
+  const mono = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' });
+
   const getStatusColor = (status: string) => {
     return status === 'Active' ? '#10B981' : '#EF4444';
+  };
+
+  const getRoleBadge = (role: string) => {
+    let color = '#0A1FDA';
+    let bg = '#E9EBFF';
+    let label = role.toUpperCase();
+    if (role.toLowerCase().includes('admin')) {
+      color = '#0A1FDA'; bg = '#E9EBFF';
+      label = 'ADMIN';
+    } else if (role.toLowerCase().includes('sales')) {
+      color = '#6366F1'; bg = '#EEF2FF';
+      label = 'SALES REP';
+    }
+    return (
+      <View style={{ backgroundColor: bg, borderRadius: 6, paddingHorizontal: 10, paddingVertical: 4, marginLeft: 12 }}>
+        <Text style={{ color, fontWeight: '700', fontSize: 12, fontFamily: mono }}>{label}</Text>
+      </View>
+    );
   };
 
   return (
@@ -31,8 +51,10 @@ export function UserManagementScreen() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>User Management</Text>
-        <View style={{ width: 24 }} />
+        <Text style={[styles.headerTitle, { fontFamily: mono }]}>User Management</Text>
+        <TouchableOpacity>
+          <MaterialIcons name="menu" size={28} color="#0A1FDA" />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.userList}>
@@ -43,20 +65,19 @@ export function UserManagementScreen() {
             onPress={() => navigation.navigate('EditUser', { userId: user.id })}
           >
             <View style={styles.userInfo}>
-              <Text style={styles.userName}>{user.name}</Text>
-              <Text style={styles.userRole}>{user.role}</Text>
+              <View>
+                <Text style={[styles.userName, { fontFamily: mono }]}>{user.name}</Text>
+                <Text style={[styles.userPhone, { fontFamily: mono }]}>+254712345678</Text>
+              </View>
+              {getRoleBadge(user.role)}
             </View>
-            <Text style={[styles.userStatus, { color: getStatusColor(user.status) }]}>
-              {user.status}
-            </Text>
-            <MaterialIcons name="chevron-right" size={24} color="#9CA3AF" />
+            <MaterialIcons name="chevron-right" size={24} color="#0A1FDA" />
           </TouchableOpacity>
         ))}
       </View>
 
       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddUser')}>
-        <MaterialIcons name="person-add" size={24} color="#fff" />
-        <Text style={styles.addButtonText}>Add User</Text>
+        <Text style={[styles.addButtonText, { fontFamily: mono }]}>Add User</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -82,21 +103,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
   },
   userInfo: { flexDirection: 'row', alignItems: 'center' },
-  userName: { fontSize: 16, fontWeight: '600', color: '#000' },
-  userRole: { fontSize: 14, color: '#6B7280' },
-  userStatus: { fontSize: 14, color: '#6B7280' },
+  userName: { fontSize: 16, fontWeight: '700', color: '#000' },
+  userPhone: { fontSize: 14, color: '#6B7280', marginTop: 2 },
   addButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    backgroundColor: '#0A1FDA',
+    borderRadius: 12,
+    paddingVertical: 16,
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#10B981',
-    borderRadius: 8,
+    marginHorizontal: 24,
+    marginBottom: 24,
   },
-  addButtonText: { fontSize: 16, fontWeight: '600', color: '#fff' },
+  addButtonText: { color: 'white', fontSize: 16, fontWeight: '700', letterSpacing: 1 },
 }); 
