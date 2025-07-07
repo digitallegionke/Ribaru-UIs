@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -29,6 +30,8 @@ export function CheckoutScreen() {
     navigation.navigate('MainTabs');
   };
 
+  const mono = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' });
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
@@ -37,7 +40,7 @@ export function CheckoutScreen() {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Checkout</Text>
+          <Text style={[styles.headerTitle, { fontFamily: mono }]}>Checkout</Text>
           <View style={{ width: 24 }} />
         </View>
 
@@ -45,43 +48,41 @@ export function CheckoutScreen() {
         <View style={styles.content}>
           {/* Amount */}
           <View style={styles.amountSection}>
-            <Text style={styles.amountLabel}>Amount to be paid</Text>
-            <Text style={styles.amountValue}>
-              <Text style={styles.currency}>KES </Text>
-              {amount.toLocaleString()}
-            </Text>
+            <Text style={[styles.amountLabel, { fontFamily: mono }]}>Amount to be paid</Text>
+            <Text style={[styles.amountValue, { color: '#0A1FDA', fontFamily: mono }]}>KES {amount.toLocaleString()}</Text>
           </View>
 
           {/* Options */}
           <View style={styles.optionsSection}>
             <TouchableOpacity style={styles.optionItem} onPress={() => navigation.navigate('AddCustomer')}>
               <View style={styles.optionLeft}>
-                <MaterialIcons name="person-add" size={20} color="#0A1FDA" />
-                <Text style={styles.optionText}>Add Customer</Text>
+                <MaterialIcons name="person-add" size={22} color="#0A1FDA" />
+                <Text style={[styles.optionText, { fontFamily: mono }]}>Add Customer</Text>
               </View>
-              <MaterialIcons name="chevron-right" size={20} color="#9CA3AF" />
+              <MaterialIcons name="chevron-right" size={22} color="#0A1FDA" />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.optionItem} onPress={() => navigation.navigate('AddPaymentOption')}>
               <View style={styles.optionLeft}>
-                <MaterialIcons name="credit-card" size={20} color="#0A1FDA" />
-                <Text style={styles.optionText}>Add Payment Option</Text>
+                <MaterialIcons name="credit-card" size={22} color="#0A1FDA" />
+                <Text style={[styles.optionText, { fontFamily: mono }]}>Add Payment Option</Text>
               </View>
-              <MaterialIcons name="chevron-right" size={20} color="#9CA3AF" />
+              <MaterialIcons name="chevron-right" size={22} color="#0A1FDA" />
             </TouchableOpacity>
           </View>
 
           {/* Add Note */}
           <View style={styles.noteSection}>
-            <Text style={styles.noteLabel}>Add Note</Text>
+            <Text style={[styles.noteLabel, { fontFamily: mono }]}>Add Note</Text>
             <TextInput
-              style={styles.noteInput}
+              style={[styles.noteInput, { fontFamily: mono }]}
               placeholder="Note"
               value={note}
               onChangeText={setNote}
               multiline
               numberOfLines={4}
               textAlignVertical="top"
+              placeholderTextColor="#C4C4C4"
             />
           </View>
         </View>
@@ -89,7 +90,7 @@ export function CheckoutScreen() {
         {/* Confirm Button */}
         <View style={styles.bottomSection}>
           <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmSale}>
-            <Text style={styles.confirmButtonText}>Confirm Sale</Text>
+            <Text style={[styles.confirmButtonText, { fontFamily: mono }]}>Confirm Sale</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -124,6 +125,10 @@ const styles = StyleSheet.create({
   },
   amountSection: {
     marginBottom: 32,
+    backgroundColor: '#F6F7FF',
+    borderRadius: 16,
+    padding: 20,
+    marginTop: 16,
   },
   amountLabel: {
     fontSize: 14,
@@ -131,9 +136,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   amountValue: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#0A1FDA',
+    letterSpacing: 1,
   },
   currency: {
     fontSize: 16,
@@ -141,15 +147,17 @@ const styles = StyleSheet.create({
   },
   optionsSection: {
     marginBottom: 32,
+    gap: 12,
   },
   optionItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#F6F7FF',
     borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    padding: 18,
+    borderWidth: 1.5,
+    borderColor: '#E9EBFF',
   },
   optionLeft: {
     flexDirection: 'row',
@@ -171,13 +179,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   noteInput: {
-    backgroundColor: 'white',
+    backgroundColor: '#F6F7FF',
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderWidth: 1.5,
+    borderColor: '#E9EBFF',
     minHeight: 100,
+    color: '#222',
   },
   bottomSection: {
     paddingHorizontal: 24,
@@ -188,10 +197,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
+    marginTop: 12,
   },
   confirmButtonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+    letterSpacing: 1,
   },
 });

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -29,15 +30,25 @@ export function HomeScreen() {
     { id: '3', name: 'Curry Paste', quantity: 3 },
   ];
 
+  const mono = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' });
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.logo}>ribaru</Text>
-        <TouchableOpacity style={styles.notificationButton}>
-          <MaterialIcons name="notifications" size={20} color="#000" />
-          <View style={styles.notificationBadge} />
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+          <TouchableOpacity style={styles.notificationButton}>
+            <MaterialIcons name="notifications" size={24} color="#000" />
+            <View style={styles.notificationBadge} />
+          </TouchableOpacity>
+          <View style={styles.avatarCircle}>
+            <Image
+              source={{ uri: 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2' }}
+              style={styles.avatarImage}
+            />
+          </View>
+        </View>
       </View>
 
       {/* Welcome Section */}
@@ -46,43 +57,31 @@ export function HomeScreen() {
           <Text style={styles.welcomeTitle}>Hey Kevin</Text>
           <Text style={styles.welcomeSubtitle}>Welcome Back</Text>
         </View>
-        <View style={styles.avatar}>
-          <Image
-            source={{ uri: 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2' }}
-            style={styles.avatarImage}
-          />
-        </View>
       </View>
 
       {/* Stats Grid */}
       <View style={styles.statsContainer}>
         {/* Today's Sales - Large Card */}
-        <View style={styles.todaysSalesCard}>
-          <Text style={styles.statsLabel}>TODAY'S SALES</Text>
-          <Text style={styles.todaysSalesAmount}>
-            <Text style={styles.currency}>KES </Text>16,788
-          </Text>
-        </View>
-
-        {/* Grid of 4 smaller cards */}
-        <View style={styles.statsGrid}>
-          <View style={styles.statsCard}>
-            <Text style={styles.statsLabel}>TOTAL STOCK VALUE</Text>
-            <Text style={styles.statsValue}>
-              <Text style={styles.currency}>KES </Text>45,850
-            </Text>
-          </View>
-          <View style={styles.statsCard}>
-            <Text style={styles.statsLabel}>TOTAL ITEMS IN STOCK</Text>
-            <Text style={styles.statsValue}>150</Text>
-          </View>
-          <View style={styles.statsCard}>
-            <Text style={styles.statsLabel}>LOW STOCK ITEMS</Text>
-            <Text style={[styles.statsValue, styles.lowStockValue]}>5</Text>
-          </View>
-          <View style={styles.statsCard}>
-            <Text style={styles.statsLabel}>YOUR CUSTOMERS</Text>
-            <Text style={styles.statsValue}>58</Text>
+        <View style={styles.statsCardBig}>
+          <Text style={[styles.statsLabel, { fontFamily: mono }]}>TODAY'S SALES</Text>
+          <Text style={[styles.todaysSalesAmount, { color: '#0A1FDA', fontFamily: mono }]}>KES 16,788</Text>
+          <View style={styles.statsGridBig}>
+            <View style={styles.statsCellBig}>
+              <Text style={[styles.statsLabel, { fontFamily: mono }]}>TOTAL STOCK VALUE</Text>
+              <Text style={[styles.statsValueBig, { fontFamily: mono }]}>KES 45,850</Text>
+            </View>
+            <View style={styles.statsCellBig}>
+              <Text style={[styles.statsLabel, { fontFamily: mono }]}>TOTAL ITEMS IN STOCK</Text>
+              <Text style={[styles.statsValueBig, { fontFamily: mono }]}>150</Text>
+            </View>
+            <View style={styles.statsCellBig}>
+              <Text style={[styles.statsLabel, { fontFamily: mono }]}>LOW STOCK ITEMS</Text>
+              <Text style={[styles.statsValueBig, { color: '#DC2626', fontFamily: mono }]}>5</Text>
+            </View>
+            <View style={styles.statsCellBig}>
+              <Text style={[styles.statsLabel, { fontFamily: mono }]}>YOUR CUSTOMERS</Text>
+              <Text style={[styles.statsValueBig, { fontFamily: mono }]}>58</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -118,13 +117,13 @@ export function HomeScreen() {
           style={styles.primaryButton}
           onPress={() => navigation.navigate('AddSale')}
         >
-          <Text style={styles.primaryButtonText}>Add a Sale</Text>
+          <Text style={[styles.primaryButtonText, { fontFamily: mono }]}>Add a Sale</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.secondaryButton}
           onPress={() => navigation.navigate('AddStock')}
         >
-          <Text style={styles.secondaryButtonText}>Add Stock</Text>
+          <Text style={[styles.secondaryButtonText, { fontFamily: mono }]}>Add Stock</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -193,6 +192,16 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     overflow: 'hidden',
   },
+  avatarCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#E9EBFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginLeft: 8,
+  },
   avatarImage: {
     width: '100%',
     height: '100%',
@@ -201,11 +210,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginBottom: 32,
   },
-  todaysSalesCard: {
-    backgroundColor: 'white',
+  statsCardBig: {
+    backgroundColor: '#F6F7FF',
     borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
+    padding: 24,
+    marginBottom: 32,
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
   },
   statsLabel: {
     fontSize: 12,
@@ -218,28 +231,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#0A1FDA',
   },
-  currency: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
-  statsGrid: {
+  statsGridBig: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    marginTop: 16,
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: '#E5E7EB',
   },
-  statsCard: {
-    backgroundColor: 'white',
-    borderRadius: 16,
+  statsCellBig: {
+    width: '50%',
     padding: 16,
-    width: '48%',
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#E5E7EB',
   },
-  statsValue: {
+  statsValueBig: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '500',
     color: '#000',
-  },
-  lowStockValue: {
-    color: '#DC2626',
+    marginTop: 4,
   },
   actionButtons: {
     paddingHorizontal: 24,
