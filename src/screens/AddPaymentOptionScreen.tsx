@@ -27,6 +27,12 @@ export function AddPaymentOptionScreen() {
           <View style={{ width: 24 }} />
         </View>
         <View style={styles.form}>
+          <Text style={styles.sectionTitle}>Saved Payment Options</Text>
+          <View style={styles.mockList}>
+            <View style={styles.mockRow}><Text style={styles.mockMethod}>Visa Card (**** 1234)</Text></View>
+            <View style={styles.mockRow}><Text style={styles.mockMethod}>M-Pesa (254712345678)</Text></View>
+            <View style={styles.mockRow}><Text style={styles.mockMethod}>Cash</Text></View>
+          </View>
           <View style={styles.formGroup}>
             <Text style={styles.label}>Payment Method</Text>
             {paymentMethods.map((pm) => (
@@ -130,4 +136,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  sectionTitle: { fontSize: 14, color: '#0A1FDA', fontWeight: '500', marginBottom: 8 },
+  mockList: { marginBottom: 16 },
+  mockRow: { backgroundColor: '#F3F4F6', borderRadius: 8, padding: 12, marginBottom: 6 },
+  mockMethod: { fontSize: 15, color: '#111827', fontWeight: '500' },
 }); 

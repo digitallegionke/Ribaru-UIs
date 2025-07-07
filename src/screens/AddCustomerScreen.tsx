@@ -26,6 +26,12 @@ export function AddCustomerScreen() {
           <View style={{ width: 24 }} />
         </View>
         <View style={styles.form}>
+          <Text style={styles.sectionTitle}>Recent Customers</Text>
+          <View style={styles.mockList}>
+            <View style={styles.mockRow}><Text style={styles.mockName}>John Mwangi</Text><Text style={styles.mockPhone}>+254 701 234567</Text></View>
+            <View style={styles.mockRow}><Text style={styles.mockName}>Mary Wanjiku</Text><Text style={styles.mockPhone}>+254 712 345678</Text></View>
+            <View style={styles.mockRow}><Text style={styles.mockName}>Ali Yusuf</Text><Text style={styles.mockPhone}>+254 733 456789</Text></View>
+          </View>
           <View style={styles.formGroup}>
             <Text style={styles.label}>Name</Text>
             <TextInput
@@ -108,4 +114,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  sectionTitle: { fontSize: 14, color: '#0A1FDA', fontWeight: '500', marginBottom: 8 },
+  mockList: { marginBottom: 16 },
+  mockRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#F3F4F6', borderRadius: 8, padding: 12, marginBottom: 6 },
+  mockName: { fontSize: 15, color: '#111827', fontWeight: '500' },
+  mockPhone: { fontSize: 14, color: '#6B7280' },
 }); 

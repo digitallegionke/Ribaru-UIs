@@ -15,7 +15,14 @@ export function AccountSettingsScreen() {
         <View style={{ width: 24 }} />
       </View>
       <View style={styles.content}>
-        <Text style={styles.placeholder}>Account settings content goes here.</Text>
+        <Text style={styles.sectionTitle}>Email</Text>
+        <Text style={styles.value}>user@ribaru.com</Text>
+        <Text style={styles.sectionTitle}>Password</Text>
+        <Text style={styles.value}>********</Text>
+        <Text style={styles.sectionTitle}>Notifications</Text>
+        <Text style={styles.value}>Enabled</Text>
+        <Text style={styles.sectionTitle}>Language</Text>
+        <Text style={styles.value}>English (UK)</Text>
       </View>
     </SafeAreaView>
   );
@@ -36,4 +43,6 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 18, fontWeight: '600', color: '#000' },
   content: { flex: 1, padding: 24 },
   placeholder: { fontSize: 16, color: '#6B7280' },
+  sectionTitle: { fontSize: 14, color: '#0A1FDA', fontWeight: '500', marginTop: 16 },
+  value: { fontSize: 16, color: '#111827', marginTop: 4 },
 }); 
