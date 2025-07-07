@@ -47,6 +47,16 @@ export function StockScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Mock product data
+  const products = [
+    { id: '1', name: 'Granola', quantity: 2, status: 'LOW STOCK' },
+    { id: '2', name: 'Trail Mix', quantity: 0, status: 'OUT OF STOCK' },
+    { id: '3', name: 'Curry Paste', quantity: 7, status: 'IN STOCK' },
+    { id: '4', name: 'Oats', quantity: 15, status: 'IN STOCK' },
+    { id: '5', name: 'Honey', quantity: 1, status: 'LOW STOCK' },
+    { id: '6', name: 'Almonds', quantity: 0, status: 'OUT OF STOCK' },
+  ];
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'IN STOCK':
@@ -60,24 +70,8 @@ export function StockScreen() {
     }
   };
 
-  const renderStockItem = ({ item }: { item: StockItem }) => (
-    <TouchableOpacity
-      style={styles.stockItem}
-      onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
-    >
-      <View style={styles.stockItemContent}>
-        <View style={styles.stockItemHeader}>
-          <Text style={styles.stockItemName}>{item.name}</Text>
-          <MaterialIcons name="chevron-right" size={24} color="#9CA3AF" />
-        </View>
-        <View style={styles.stockItemFooter}>
-          <Text style={styles.stockItemQuantity}>Quantity: {item.quantity}</Text>
-          <Text style={[styles.stockItemStatus, { color: getStatusColor(item.status) }]}>
-            {item.status}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -136,12 +130,26 @@ export function StockScreen() {
 
       {/* Stock List */}
       <View style={styles.stockList}>
-        <FlatList
-          data={stockItems}
-          renderItem={renderStockItem}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-        />
+        {filteredProducts.map(product => (
+          <TouchableOpacity
+            key={product.id}
+            style={styles.stockItem}
+            onPress={() => navigation.navigate('ProductDetail', { productId: product.id })}
+          >
+            <View style={styles.stockItemContent}>
+              <View style={styles.stockItemHeader}>
+                <Text style={styles.stockItemName}>{product.name}</Text>
+                <MaterialIcons name="chevron-right" size={24} color="#9CA3AF" />
+              </View>
+              <View style={styles.stockItemFooter}>
+                <Text style={styles.stockItemQuantity}>Quantity: {product.quantity}</Text>
+                <Text style={[styles.stockItemStatus, { color: getStatusColor(product.status) }]}> 
+                  {product.status}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
     </SafeAreaView>
   );

@@ -30,6 +30,8 @@ export type RootStackParamList = {
   ProfileSettings: undefined;
   AccountSettings: undefined;
   UserManagement: undefined;
+  EditUser: { userId: string };
+  AddUser: undefined;
   BusinessProfile: undefined;
   POSSetup: undefined;
   OnboardingWelcome: undefined;

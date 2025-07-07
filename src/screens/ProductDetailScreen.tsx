@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Image,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -14,12 +15,80 @@ import type { RouteProp as RNRouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../navigation/AppNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type ProductDetailRouteProp = RNRouteProp<RootStackParamList, 'ProductDetail'>;
+type ProductDetailScreenProps = {
+  route: RNRouteProp<RootStackParamList, 'ProductDetail'>;
+};
 
-export function ProductDetailScreen() {
+export function ProductDetailScreen({ route }: ProductDetailScreenProps) {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<ProductDetailRouteProp>();
-  const [hasChanges, setHasChanges] = useState(false);
+  const { productId } = route.params;
+
+  // Mock product details for demo
+  const mockProducts = {
+    '1': {
+      name: 'Granola',
+      image: require('../assets/icon.png'),
+      price: 7.99,
+      quantity: 2,
+      status: 'LOW STOCK',
+      description: 'Crunchy granola with honey and almonds. Perfect for breakfast or snacking.'
+    },
+    '2': {
+      name: 'Trail Mix',
+      image: require('../assets/icon.png'),
+      price: 5.49,
+      quantity: 0,
+      status: 'OUT OF STOCK',
+      description: 'A delicious blend of nuts, seeds, and dried fruit.'
+    },
+    '3': {
+      name: 'Curry Paste',
+      image: require('../assets/icon.png'),
+      price: 3.99,
+      quantity: 7,
+      status: 'IN STOCK',
+      description: 'Authentic curry paste for flavorful dishes.'
+    },
+    '4': {
+      name: 'Oats',
+      image: require('../assets/icon.png'),
+      price: 2.99,
+      quantity: 15,
+      status: 'IN STOCK',
+      description: 'Whole grain oats for a healthy breakfast.'
+    },
+    '5': {
+      name: 'Honey',
+      image: require('../assets/icon.png'),
+      price: 6.25,
+      quantity: 1,
+      status: 'LOW STOCK',
+      description: 'Pure, natural honey from local farms.'
+    },
+    '6': {
+      name: 'Almonds',
+      image: require('../assets/icon.png'),
+      price: 8.99,
+      quantity: 0,
+      status: 'OUT OF STOCK',
+      description: 'Crunchy roasted almonds, lightly salted.'
+    },
+  };
+
+  const product = mockProducts[productId] || mockProducts['1'];
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'IN STOCK':
+        return '#10B981';
+      case 'LOW STOCK':
+        return '#F59E0B';
+      case 'OUT OF STOCK':
+        return '#EF4444';
+      default:
+        return '#6B7280';
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -115,20 +184,7 @@ export function ProductDetailScreen() {
         </View>
       </ScrollView>
 
-      {/* Bottom Buttons */}
-      <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.cancelButton}>
-          <Text style={styles.cancelButtonText}>Cancel</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={[styles.saveButton, !hasChanges && styles.disabledButton]}
-          disabled={!hasChanges}
-        >
-          <Text style={[styles.saveButtonText, !hasChanges && styles.disabledButtonText]}>
-            Save
-          </Text>
-        </TouchableOpacity>
-      </View>
+      {/* Bottom Buttons (hidden in demo/mock) */}
     </SafeAreaView>
   );
 }
@@ -237,41 +293,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#0A1FDA',
     fontWeight: '600',
-  },
-  bottomSection: {
-    flexDirection: 'row',
-    paddingHorizontal: 24,
-    paddingBottom: 24,
-    gap: 12,
-  },
-  cancelButton: {
-    flex: 1,
-    backgroundColor: '#E5E7EB',
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-  },
-  cancelButtonText: {
-    color: '#0A1FDA',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  saveButton: {
-    flex: 1,
-    backgroundColor: '#0A1FDA',
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-  },
-  saveButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  disabledButton: {
-    backgroundColor: '#9CA3AF',
-  },
-  disabledButtonText: {
-    color: '#D1D5DB',
   },
 });

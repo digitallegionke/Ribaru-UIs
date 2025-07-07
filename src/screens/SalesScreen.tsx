@@ -49,17 +49,14 @@ const recentSales: Sale[] = [
 export function SalesScreen() {
   const navigation = useNavigation<NavigationProp>();
 
-  const renderSale = ({ item }: { item: Sale }) => (
-    <TouchableOpacity style={styles.saleItem}>
-      <View>
-        <Text style={styles.saleProduct}>{item.product}</Text>
-        <Text style={styles.saleMeta}>
-          {item.quantity} Items • {item.total}
-        </Text>
-        <Text style={styles.saleDate}>{item.date}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+  // Mock sales data
+  const sales = [
+    { id: '1', product: 'Granola', quantity: 3, total: 3600, date: '2024-07-08 10:30' },
+    { id: '2', product: 'Trail Mix', quantity: 2, total: 1600, date: '2024-07-08 09:15' },
+    { id: '3', product: 'Curry Paste', quantity: 5, total: 12000, date: '2024-07-07 16:20' },
+    { id: '4', product: 'Oats', quantity: 1, total: 400, date: '2024-07-07 14:10' },
+    { id: '5', product: 'Honey', quantity: 4, total: 3200, date: '2024-07-06 11:00' },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,12 +103,16 @@ export function SalesScreen() {
       {/* Recent Sales */}
       <View style={styles.salesSection}>
         <Text style={styles.sectionTitle}>RECENT SALES</Text>
-        <FlatList
-          data={recentSales}
-          renderItem={renderSale}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-        />
+        {sales.map(sale => (
+          <View key={sale.id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', borderRadius: 12, padding: 16, marginBottom: 8 }}>
+            <View>
+              <Text style={{ fontSize: 16, fontWeight: '500' }}>{sale.product}</Text>
+              <Text style={{ color: '#6B7280', fontSize: 12 }}>{sale.date}</Text>
+              <Text style={{ color: '#6B7280', fontSize: 12 }}>Qty: {sale.quantity}</Text>
+            </View>
+            <Text style={{ fontWeight: 'bold', color: '#0A1FDA' }}>KES {sale.total.toLocaleString()}</Text>
+          </View>
+        ))}
       </View>
 
       {/* Floating Add Button */}
@@ -119,8 +120,7 @@ export function SalesScreen() {
         style={styles.floatingButton}
         onPress={() => navigation.navigate('AddSale')}
       >
-        <MaterialIcons name="add" size={20} color="white" />
-        <Text style={styles.floatingButtonText}>Add Sale</Text>
+        <MaterialIcons name="add" size={24} color="#fff" />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -209,27 +209,6 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: 16,
   },
-  saleItem: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-  },
-  saleProduct: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#000',
-    marginBottom: 4,
-  },
-  saleMeta: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 4,
-  },
-  saleDate: {
-    fontSize: 12,
-    color: '#9CA3AF',
-  },
   floatingButton: {
     position: 'absolute',
     bottom: 100,
@@ -248,11 +227,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-  },
-  floatingButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
-    marginLeft: 8,
   },
 });

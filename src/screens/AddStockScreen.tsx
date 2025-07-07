@@ -17,16 +17,19 @@ import type { RootStackParamList } from '../navigation/AppNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
+const mockProducts = ['Granola', 'Trail Mix', 'Curry Paste', 'Oats', 'Honey', 'Almonds'];
+const mockSuppliers = ['Acme Foods', 'Sunrise Distributors', 'Global Traders'];
+
 export function AddStockScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const [productName, setProductName] = useState('');
-  const [sku, setSku] = useState('');
-  const [description, setDescription] = useState('');
-  const [quantity, setQuantity] = useState('3');
-  const [price, setPrice] = useState('1,500');
+  const [selectedProduct, setSelectedProduct] = useState(mockProducts[0]);
+  const [quantity, setQuantity] = useState('10');
+  const [supplier, setSupplier] = useState(mockSuppliers[0]);
+  const [showProductList, setShowProductList] = useState(false);
+  const [showSupplierList, setShowSupplierList] = useState(false);
 
-  const handleAddStock = () => {
-    // Handle add stock logic
+  const handleSave = () => {
+    // In a real app, save the stock addition
     navigation.goBack();
   };
 
@@ -47,76 +50,57 @@ export function AddStockScreen() {
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           {/* Product Name */}
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Product Name*</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Granola"
-              value={productName}
-              onChangeText={setProductName}
-            />
-          </View>
-
-          {/* SKU */}
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>SKU*</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="32"
-              value={sku}
-              onChangeText={setSku}
-              keyboardType="numeric"
-            />
-          </View>
-
-          {/* Description */}
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Description (Optional)</Text>
-            <TextInput
-              style={[styles.input, styles.textArea]}
-              placeholder="Enter Stock Description"
-              value={description}
-              onChangeText={setDescription}
-              multiline
-              numberOfLines={4}
-              textAlignVertical="top"
-            />
-          </View>
-
-          {/* Add Variants */}
-          <TouchableOpacity style={styles.addVariantsButton}>
-            <MaterialIcons name="add" size={20} color="#0A1FDA" />
-            <Text style={styles.addVariantsText}>Add Variants(color, size, weight)</Text>
-          </TouchableOpacity>
-
-          {/* Initial Quantity */}
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Initial Quantity</Text>
-            <TouchableOpacity style={styles.selectInput}>
-              <Text style={styles.selectText}>{quantity}</Text>
-              <MaterialIcons name="keyboard-arrow-down" size={20} color="#9CA3AF" />
+            <Text style={styles.label}>Product</Text>
+            <TouchableOpacity style={styles.selectButton} onPress={() => setShowProductList(!showProductList)}>
+              <Text style={styles.selectButtonText}>{selectedProduct}</Text>
+              <MaterialIcons name="expand-more" size={20} color="#0A1FDA" />
             </TouchableOpacity>
+            {showProductList && (
+              <View style={styles.dropdownList}>
+                {mockProducts.map(product => (
+                  <TouchableOpacity key={product} style={styles.dropdownItem} onPress={() => { setSelectedProduct(product); setShowProductList(false); }}>
+                    <Text style={styles.dropdownItemText}>{product}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </View>
 
-          {/* Price per Item */}
+          {/* Quantity */}
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Price per Item</Text>
-            <View style={styles.priceInputContainer}>
-              <Text style={styles.currencyPrefix}>KES</Text>
-              <TextInput
-                style={styles.priceInput}
-                placeholder="1,500"
-                value={price}
-                onChangeText={setPrice}
-                keyboardType="numeric"
-              />
-            </View>
+            <Text style={styles.label}>Quantity</Text>
+            <TextInput
+              style={styles.input}
+              value={quantity}
+              onChangeText={setQuantity}
+              keyboardType="numeric"
+              placeholder="0"
+            />
+          </View>
+
+          {/* Supplier */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Supplier</Text>
+            <TouchableOpacity style={styles.selectButton} onPress={() => setShowSupplierList(!showSupplierList)}>
+              <Text style={styles.selectButtonText}>{supplier}</Text>
+              <MaterialIcons name="expand-more" size={20} color="#0A1FDA" />
+            </TouchableOpacity>
+            {showSupplierList && (
+              <View style={styles.dropdownList}>
+                {mockSuppliers.map(sup => (
+                  <TouchableOpacity key={sup} style={styles.dropdownItem} onPress={() => { setSupplier(sup); setShowSupplierList(false); }}>
+                    <Text style={styles.dropdownItemText}>{sup}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </View>
         </ScrollView>
 
         {/* Add Stock Button */}
         <View style={styles.bottomSection}>
-          <TouchableOpacity style={styles.addStockButton} onPress={handleAddStock}>
-            <Text style={styles.addStockButtonText}>Add Stock</Text>
+          <TouchableOpacity style={styles.addStockButton} onPress={handleSave}>
+            <Text style={styles.addStockButtonText}>Save</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -230,5 +214,33 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+  },
+  selectButton: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  selectButtonText: {
+    fontSize: 16,
+    color: '#000',
+  },
+  dropdownList: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 16,
+    maxHeight: 200,
+  },
+  dropdownItem: {
+    padding: 8,
+  },
+  dropdownItemText: {
+    fontSize: 16,
+    color: '#000',
   },
 });
