@@ -150,7 +150,7 @@ export function StockScreen() {
                   </Text>
                 </View>
                 <View style={[styles.statusPill, { backgroundColor: getStatusColor(item.status) }]}>
-                  <Text variant="caption" weight="medium" style={[styles.statusPillText, { color: getStatusTextColor(item.status) }]}>
+                  <Text variant="caption" weight="medium" style={{ ...styles.statusPillText, color: getStatusTextColor(item.status) }}>
                     {item.status}
                   </Text>
                 </View>
@@ -241,11 +241,11 @@ const styles = StyleSheet.create({
     ...SHADOWS.sm,
   },
   searchBarInput: {
-    flex: 1,
     ...TYPOGRAPHY.body1,
     color: COLORS.gray[700],
     marginLeft: SPACING.sm,
     paddingRight: SPACING.lg,
+    fontWeight: '500',
   },
   productListContainer: {
     paddingHorizontal: SPACING.xl,
